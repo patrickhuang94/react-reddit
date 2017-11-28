@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Header from './header'
+import Home from './home'
 import Footer from './footer'
 
 import logo from '../logo.svg'
@@ -8,7 +9,8 @@ import '../App.css'
 
 const mainContainer = {
 	display: 'flex',
-	justifyContent: 'center'
+	flexDirection:' column',
+	// alignItems: 'center'
 }
 
 const headingContainer = {
@@ -20,6 +22,7 @@ class App extends React.Component {
 		return (
 			<div style={mainContainer}>
 				<Header />
+				<Home />
 				<Footer />
 			</div>
 		)
