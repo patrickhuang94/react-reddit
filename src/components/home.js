@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import { push } from 'react-router-redux'
+
 const homeContainer = {
 	display: 'flex',
 	alignItems: 'center',
@@ -15,13 +17,14 @@ class Home extends React.Component {
 		return (
 			<div style={homeContainer}>
 				<p>This is home!</p>
+				<button onClick={this.props.changePage()}>Go to About page</button>
 			</div>
 		)
 	}
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({}, dispatch)
+	return bindActionCreators({changePage: () => push('/about')}, dispatch)
 }
 
 export default connect(null, mapDispatchToProps)(Home)
