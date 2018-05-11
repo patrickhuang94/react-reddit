@@ -17,7 +17,7 @@ class Home extends React.Component {
 		return (
 			<div style={homeContainer}>
 				<p>This is home!</p>
-				<button onClick={this.props.changePage()}>Go to About page</button>
+				<button onClick={this.props.changePage}>Go to About page</button>
 			</div>
 		)
 	}
