@@ -1,1 +1,1 @@
-export const SIGN_IN = 'sign_in'
+export const ADD_POSTS = 'add_posts'

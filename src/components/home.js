@@ -1,8 +1,9 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {push} from 'react-router-redux'
 
-import { push } from 'react-router-redux'
+import {fetchPosts} from '../actions'
 
 const homeContainer = {
 	display: 'flex',
@@ -19,44 +20,18 @@ class Home extends React.Component {
 		super()
 
 		this.state = {
-			posts: null
+			posts: null,
+			sub: null,
+			limit: null
 		}
 	}
 
 	componentDidMount () {
 
-		// Fetch Reddit API
-		this.fetchPosts()
-	}
-
-	handlePosts (res) {
-
-		this.setState({posts: res})
-	}
-
-	fetchPosts () {
-
-		const options = {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-      },
-      cors: true,
-      credentials: 'same-origin'
-    }
-
-		const fetchUrl = 'https://www.reddit.com/r/all.json?limit=5'
-		fetch(fetchUrl, options)
-			.then(res => {
-				res.json().then(data => {
-					console.log({data})
-					return data
-				})
-
-				return res
-			})
-			.catch(err => console.error(err))
+		this.props.fetchPosts({
+			sub: this.state.sub,
+			limit: this.state.limit
+		})
 	}
 
 	render () {
@@ -72,7 +47,7 @@ class Home extends React.Component {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({changePage: () => push('/about')}, dispatch)
+	return bindActionCreators({fetchPosts}, dispatch)
 }
 
 export default connect(null, mapDispatchToProps)(Home)
