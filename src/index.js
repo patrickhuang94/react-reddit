@@ -16,8 +16,8 @@ const app = (
 	<Provider store={store}>
 		<Router history={history} onUpdate={() => window.scrollTo(0, 0)}>
 			<div>
-				<Route path="/" component={Home} />
-				<Route path="/about" component={About} />
+				<Route path="/" component={App} />
+				<Route path="/home" component={Home} />
 			</div>
 		</Router>
 	</Provider>

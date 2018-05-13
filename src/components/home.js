@@ -13,10 +13,58 @@ const homeContainer = {
 }
 
 class Home extends React.Component {
-	render() {
+
+	constructor () {
+
+		super()
+
+		this.state = {
+			posts: null
+		}
+	}
+
+	componentDidMount () {
+
+		// Fetch Reddit API
+		this.fetchPosts()
+	}
+
+	handlePosts (res) {
+
+		this.setState({posts: res})
+	}
+
+	fetchPosts () {
+
+		const options = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      },
+      cors: true,
+      credentials: 'same-origin'
+    }
+
+		const fetchUrl = 'https://www.reddit.com/r/all.json?limit=5'
+		fetch(fetchUrl, options)
+			.then(res => {
+				res.json().then(data => {
+					console.log({data})
+					return data
+				})
+
+				return res
+			})
+			.catch(err => console.error(err))
+	}
+
+	render () {
+
 		return (
 			<div style={homeContainer}>
 				<p>This is home!</p>
+				<p>{this.state.posts}</p>
 				<button onClick={this.props.changePage}>Go to About page</button>
 			</div>
 		)
