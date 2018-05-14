@@ -5,8 +5,11 @@ import {push} from 'react-router-redux'
 
 import {fetchPosts} from '../actions'
 
+import {isEmpty, get} from 'lodash'
+
 const homeContainer = {
 	display: 'flex',
+	flexDirection: 'column',
 	alignItems: 'center',
 	justifyContent: 'center',
 	backgroundColor: '#ddd',
@@ -20,17 +23,31 @@ class Home extends React.Component {
 		super()
 
 		this.state = {
-			posts: null,
 			sub: null,
 			limit: null
 		}
 	}
 
-	componentDidMount () {
+	fetchPosts = () => {
 
 		this.props.fetchPosts({
-			sub: this.state.sub,
-			limit: this.state.limit
+			sub: 'all',
+			limit: 10
+		})
+	}
+
+	renderLists () {
+
+		const posts = this.props.posts
+
+		return posts.map((post, index) => {
+			const thumbnail = get(post, ['data', 'thumbnail'])
+
+			return (
+				<div style={{height: '100px', width: '100px', margin: '10px'}} key={index}>
+					<img src={thumbnail} />
+				</div>
+			)
 		})
 	}
 
@@ -38,16 +55,25 @@ class Home extends React.Component {
 
 		return (
 			<div style={homeContainer}>
-				<p>This is home!</p>
-				<p>{this.state.posts}</p>
-				<button onClick={this.props.changePage}>Go to About page</button>
+				<button onClick={this.fetchPosts}>Fetch subreddit</button>
+				<div style={{display: 'flex', flexWrap: 'wrap'}}>
+					{!isEmpty(this.props.posts) && this.renderLists()}
+				</div>
 			</div>
 		)
 	}
 }
 
 function mapDispatchToProps(dispatch) {
+
 	return bindActionCreators({fetchPosts}, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(Home)
+function mapStateToProps(state) {
+
+	return {
+		posts: state.posts
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
