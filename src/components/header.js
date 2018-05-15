@@ -4,6 +4,7 @@ const headerContainer = {
 	display: 'flex',
 	justifyContent: 'flex-start',
 	backgroundColor: '#FF5700',
+	height: '100px',
 	width: '100%'
 }
 

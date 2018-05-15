@@ -10,7 +10,6 @@ import '../App.css'
 const mainContainer = {
 	display: 'flex',
 	flexDirection:' column',
-	// alignItems: 'center'
 }
 
 const headingContainer = {

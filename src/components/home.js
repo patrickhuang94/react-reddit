@@ -4,16 +4,23 @@ import {bindActionCreators} from 'redux'
 import {push} from 'react-router-redux'
 
 import {fetchPosts} from '../actions'
+import Card from './card'
 
-import {isEmpty, get} from 'lodash'
+import {isEmpty} from 'lodash'
 
-const homeContainer = {
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'center',
-	justifyContent: 'center',
-	backgroundColor: '#ddd',
-	height: '500px'
+const styles = {
+	homeContainer: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#ddd',
+		minHeight: '500px'
+	},
+	postsContainer: {
+		display: 'flex',
+		flexDirection: 'column'
+	}
 }
 
 class Home extends React.Component {
@@ -36,40 +43,30 @@ class Home extends React.Component {
 		})
 	}
 
-	renderLists () {
-
-		const posts = this.props.posts
-
-		return posts.map((post, index) => {
-			const thumbnail = get(post, ['data', 'thumbnail'])
-
-			return (
-				<div style={{height: '100px', width: '100px', margin: '10px'}} key={index}>
-					<img src={thumbnail} />
-				</div>
-			)
-		})
-	}
-
 	render () {
 
 		return (
-			<div style={homeContainer}>
+			<div style={styles.homeContainer}>
 				<button onClick={this.fetchPosts}>Fetch subreddit</button>
-				<div style={{display: 'flex', flexWrap: 'wrap'}}>
-					{!isEmpty(this.props.posts) && this.renderLists()}
+				<div style={styles.postsContainer}>
+					{
+						!isEmpty(this.props.posts) &&
+						this.props.posts.map((post, index) => {
+							return <Card post={post} index={index} />
+						})
+					}
 				</div>
 			</div>
 		)
 	}
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
 
 	return bindActionCreators({fetchPosts}, dispatch)
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
 
 	return {
 		posts: state.posts

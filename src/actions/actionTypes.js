@@ -1,1 +1,1 @@
-export const ADD_POSTS = 'add_posts'
+export const ADD_POSTS = 'ADD_POSTS'
