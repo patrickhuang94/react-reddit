@@ -1,33 +1,46 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
-const headerContainer = {
-	display: 'flex',
-	justifyContent: 'flex-start',
-	backgroundColor: '#FF5700',
-	height: '100px',
-	width: '100%'
-}
+import {fetchPosts} from '../actions'
 
-const categoryContainer = {
-	display: 'flex'
-}
-
-const categoryStyle = {
-	margin: '10px 15px',
-	color: 'white'
+const styles = {
+	headerContainer: {
+		display: 'flex',
+		justifyContent: 'flex-start',
+		backgroundColor: '#FF5700',
+		height: '100px',
+		width: '100%'
+	},
+	categoryContainer: {
+		display: 'flex'
+	},
+	categoryStyle: {
+		margin: '10px 15px',
+		color: 'white'
+	},
+	button: {
+		backgroundColor: '#FF5700'
+	}
 }
 
 class Header extends React.Component {
 	render() {
+
 		return (
-			<div style={headerContainer}>
-				<div style={categoryContainer}>
-					<p style={categoryStyle}>Popular</p>
-					<p style={categoryStyle}>All</p>
+			<div style={styles.headerContainer}>
+				<div style={styles.categoryContainer}>
+					<p>Popular</p>
+					<p>All</p>
 				</div>
 			</div>
 		)
 	}
 }
 
-export default Header
+function mapDispatchToProps (dispatch) {
+
+	return bindActionCreators({fetchPosts}, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(Header)
