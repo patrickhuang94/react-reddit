@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {push} from 'react-router-redux'
+// import {push} from 'react-router-redux'
 
 import {fetchPosts} from '../actions'
 import Card from './card'
@@ -14,7 +14,7 @@ const styles = {
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: '#ddd',
+		// backgroundColor: '#ddd',
 		minHeight: '500px'
 	},
 	postsContainer: {
@@ -25,20 +25,10 @@ const styles = {
 
 class Home extends React.Component {
 
-	constructor () {
-
-		super()
-
-		this.state = {
-			sub: null,
-			limit: null
-		}
-	}
-
-	fetchPosts = () => {
+	fetchPosts (subreddit) {
 
 		this.props.fetchPosts({
-			sub: 'all',
+			sub: subreddit,
 			limit: 10
 		})
 	}
@@ -47,7 +37,7 @@ class Home extends React.Component {
 
 		return (
 			<div style={styles.homeContainer}>
-				<button onClick={this.fetchPosts}>Fetch subreddit</button>
+				<button onClick={() => this.fetchPosts('all')}>Fetch subreddit</button>
 				<div style={styles.postsContainer}>
 					{
 						!isEmpty(this.props.posts) &&
