@@ -1,10 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-// import {push} from 'react-router-redux'
 
 import {fetchPosts} from '../actions'
 import Card from './card'
+import Dropdown from '../elements/dropdown'
 
 import {isEmpty} from 'lodash'
 
@@ -12,10 +12,18 @@ const styles = {
 	homeContainer: {
 		display: 'flex',
 		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
-		// backgroundColor: '#ddd',
-		minHeight: '500px'
+		width: '100%'
+	},
+	container: { // TODO: rename
+		height: '100%',
+		overflow: 'scroll'
+	},
+	headerContainer: {
+		backgroundColor: 'gray',
+		minHeight: '70px',
+		width: '100%',
+		display: 'flex',
+		alignItems: 'center'
 	},
 	postsContainer: {
 		display: 'flex',
@@ -24,6 +32,11 @@ const styles = {
 }
 
 class Home extends React.Component {
+
+	componentDidMount () {
+
+		this.fetchPosts('all')
+	}
 
 	fetchPosts (subreddit) {
 
@@ -37,14 +50,22 @@ class Home extends React.Component {
 
 		return (
 			<div style={styles.homeContainer}>
-				<button onClick={() => this.fetchPosts('all')}>Fetch subreddit</button>
-				<div style={styles.postsContainer}>
-					{
-						!isEmpty(this.props.posts) &&
-						this.props.posts.map((post, index) => {
-							return <Card post={post} index={index} />
-						})
-					}
+				<div style={styles.headerContainer}>
+					<Dropdown title='Subreddits'>
+						
+					</Dropdown>
+				</div>
+
+				<div style={styles.container}>
+					<button onClick={() => this.fetchPosts('all')}>Fetch subreddit</button>
+					<div style={styles.postsContainer}>
+						{
+							!isEmpty(this.props.posts) &&
+							this.props.posts.map((post, index) => {
+								return <Card post={post} index={index} />
+							})
+						}
+					</div>
 				</div>
 			</div>
 		)

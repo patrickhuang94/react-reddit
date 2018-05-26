@@ -7,9 +7,9 @@ import TimeAgo from 'react-timeago'
 const styles = {
   cardContainer: {
     display: 'flex',
-    // margin: '10px',
     margin: '10px 25px',
-    height: '90px',
+    // height: '120px',
+    minHeight: '120px',
     border: '1px solid black'
   },
   scoreContainer: {
