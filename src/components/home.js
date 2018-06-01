@@ -19,11 +19,13 @@ const styles = {
 		overflow: 'scroll'
 	},
 	headerContainer: {
-		backgroundColor: 'gray',
+		backgroundColor: '#F5F5F5',
 		minHeight: '70px',
 		width: '100%',
 		display: 'flex',
-		alignItems: 'center'
+		alignItems: 'center',
+		paddingLeft: '10px',
+		// padding: '0px 10px'
 	},
 	postsContainer: {
 		display: 'flex',
@@ -46,18 +48,37 @@ class Home extends React.Component {
 		})
 	}
 
+	onSelect = () => {
+
+		return
+	}
+
 	render () {
 
 		return (
 			<div style={styles.homeContainer}>
 				<div style={styles.headerContainer}>
-					<Dropdown title='Subreddits'>
-						
-					</Dropdown>
+					<Dropdown
+						title="Choose an option"
+						list={[
+							{
+								id: 0,
+								title: 'all'
+							},
+							{
+								id: 1,
+								title: 'pics'
+							},
+							{
+								id: 2,
+								title: 'funny'
+							}
+						]}
+					/>
+					<button onClick={() => this.fetchPosts('all')}>Fetch subreddit</button>
 				</div>
 
 				<div style={styles.container}>
-					<button onClick={() => this.fetchPosts('all')}>Fetch subreddit</button>
 					<div style={styles.postsContainer}>
 						{
 							!isEmpty(this.props.posts) &&

@@ -1,79 +1,51 @@
 import React from 'react'
 
 const styles = {
-  base: {
-    border: '1px solid black',
-    padding: '5px 10px'
-    // width: '30px',
-    // height: '30px'
-  },
-  title: {
-    display: 'inline-block',
+  dropdownContainer: {
+    border: '1px solid #9B9B9B',
+    backgroundColor: 'white',
+    padding: '10px',
+    height: '20px',
+    // width: '130px',
     cursor: 'pointer',
-    fontSize: 16
+    zIndex: 99
   },
-  submenu: {
-    display: 'none',
-    position: 'absolute',
-    top: '100%',
-    right: 0,
-    width: 240,
+  ul: {
+
   },
-  submenuExpanded: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  link: {
-    marginBottom: 10
+  li: {
+    // position: 'absolute',
+    // position: 'fixed',
+    marginRight: 12,
+    padding: '10px',
+    backgroundColor: 'white',
+    width: '100%',
+    border: '1px solid #9B9B9B',
+    zIndex: 99
   }
 }
 
 class Dropdown extends React.Component {
 
   state = {
-    isExpanded: false
+    isOpen: false
   }
 
-  handleDropdownClick = (e) => {
+  toggleList = () => {
 
-    e.stopPropagation() // what does this do
-    this.toggleDropdown()
-  }
-
-  toggleDropdown = () => {
-
-    this.setState({
-      isExpanded: !this.state.isExpanded
-    })
-  }
-
-  renderLinks () {
-
-    return React.Children.map(this.props.children, (link) => {
-
-      if (!link) {
-        return null
-      }
-
-      return React.cloneElement(link, {
-        style: styles.link
-      })
-    })
+    this.setState({isOpen: !this.state.isOpen})
   }
 
   render () {
 
     return (
-      <div style={styles.base}>
-        <span style={styles.title} onClick={this.handleDropdownClick}>
-          {this.props.title} <i className="fas fa-caret"></i>
-        </span>
-        <div style={[
-          styles.submenu, // should be hidden
-          this.state.isExpanded ? this.styles.subMenuExpanded : {}
-        ]}>
-          {this.renderLinks()}
-        </div>
+      <div style={styles.dropdownContainer} onClick={this.toggleList}>
+        <div>{this.props.title}</div>
+        { this.state.isOpen &&
+          this.props.list.map(item => {
+            return <div key={item.id} style={styles.li}>{item.title}</div>
+          })
+        }
       </div>
     )
   }
