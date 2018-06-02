@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux'
 import {fetchPosts} from '../actions'
 import Card from './card'
 import Dropdown from '../elements/dropdown'
+import colors from '../colors'
 
 import {isEmpty} from 'lodash'
 
@@ -15,11 +16,11 @@ const styles = {
 	homeContainer: {
 		display: 'flex',
 		flexDirection: 'column',
-		backgroundColor: '#F5F5F5',
+		backgroundColor: colors.gray,
 		width: '100%'
 	},
 	topicsContainer: {
-		backgroundColor: '#F5F5F5',
+		backgroundColor: colors.gray,
 		minHeight: '70px',
 		width: '100%',
 		display: 'flex',

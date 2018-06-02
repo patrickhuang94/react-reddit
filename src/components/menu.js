@@ -1,15 +1,17 @@
 import React from 'react'
 
+import colors from '../colors'
+
 const styles = {
   leftMenu: {
 		width: '200px',
 		display: 'flex',
 		flexDirection: 'column',
-		backgroundColor: '#35363B'
+		backgroundColor: colors.darkestGray
   },
   searchBarContainer: {
     height: '70px',
-    backgroundColor: '#4E525A'
+    backgroundColor: colors.darkGray
   },
   searchBar: {
     margin: '20px 15px 15px 10px',
