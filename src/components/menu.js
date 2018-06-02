@@ -7,11 +7,11 @@ const styles = {
 		flexDirection: 'column',
 		backgroundColor: '#35363B'
   },
-  redditHeaderContainer: {
+  searchBarContainer: {
     height: '70px',
     backgroundColor: '#4E525A'
   },
-  redditHeader: {
+  searchBar: {
     margin: '20px 15px 15px 10px',
     fontSize: 24,
     color: 'white'
@@ -24,8 +24,8 @@ class Menu extends React.Component {
 
     return (
       <div style={styles.leftMenu}>
-        <div style={styles.redditHeaderContainer}>
-          <p style={styles.redditHeader}>reddit</p>
+        <div style={styles.searchBarContainer}>
+          <p style={styles.searchBar}>search bar</p>
         </div>
       </div>
     )

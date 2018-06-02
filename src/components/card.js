@@ -7,10 +7,9 @@ import TimeAgo from 'react-timeago'
 const styles = {
   cardContainer: {
     display: 'flex',
-    margin: '10px 25px',
-    // height: '120px',
-    minHeight: '120px',
-    border: '1px solid black'
+    backgroundColor: 'white',
+    padding: '14px 0px 10px 0px',
+    marginBottom: '15px'
   },
   scoreContainer: {
     padding: '10px',
@@ -21,12 +20,15 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
     width: '100%',
-    padding: '15px',
-    backgroundColor: 'yellow'
+    padding: '15px'
+  },
+  titleText: {
+    margin: '0',
+    color: 'blue'
   },
   thumbnail: {
-    width: '90px',
-    height: '90px'
+    width: '100px',
+    height: '100px'
   },
   scoreStyle: {
     fontSize: 16,
@@ -39,7 +41,6 @@ class Card extends React.Component {
   render () {
 
     const {post, index} = this.props
-    console.log({post})
     const thumbnail = get(post, ['data', 'thumbnail'])
     const title = get(post, ['data', 'title'])
     const score = get(post, ['data', 'score'])
@@ -62,8 +63,8 @@ class Card extends React.Component {
         </div>
 
         <div style={styles.titleContainer}>
-          <p style={{margin: 0}}>{title}</p>
-          <p style={{marginBottom: 0}}>Posted 3 hours ago by r/{author}</p>
+          <p style={styles.titleText}>{title}</p>
+          <p style={{marginBottom: 0, marginTop: 0}}>Posted 3 hours ago by r/{author}</p>
         </div>
 
       </div>

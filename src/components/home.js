@@ -9,27 +9,29 @@ import Dropdown from '../elements/dropdown'
 import {isEmpty} from 'lodash'
 
 const styles = {
+	container: {
+		height: '100%'
+	},
 	homeContainer: {
 		display: 'flex',
 		flexDirection: 'column',
+		backgroundColor: '#F5F5F5',
 		width: '100%'
 	},
-	container: { // TODO: rename
-		height: '100%',
-		overflow: 'scroll'
-	},
-	headerContainer: {
+	topicsContainer: {
 		backgroundColor: '#F5F5F5',
 		minHeight: '70px',
 		width: '100%',
 		display: 'flex',
-		alignItems: 'center',
-		paddingLeft: '10px',
-		// padding: '0px 10px'
+		alignItems: 'center'
+	},
+	topic: {
+		margin: '0px 10px'
 	},
 	postsContainer: {
 		display: 'flex',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		margin: '0px 15px 15px'
 	}
 }
 
@@ -53,41 +55,38 @@ class Home extends React.Component {
 		return
 	}
 
+	renderPosts () {
+
+		return (
+			<div style={styles.container}>
+				<div style={styles.postsContainer}>
+					{
+						!isEmpty(this.props.posts) &&
+						this.props.posts.map((post, index) => {
+							return <Card post={post} index={index} />
+						})
+					}
+				</div>
+			</div>
+		)
+	}
+
 	render () {
 
 		return (
 			<div style={styles.homeContainer}>
-				<div style={styles.headerContainer}>
-					<Dropdown
-						title="Choose an option"
-						list={[
-							{
-								id: 0,
-								title: 'all'
-							},
-							{
-								id: 1,
-								title: 'pics'
-							},
-							{
-								id: 2,
-								title: 'funny'
-							}
-						]}
-					/>
-					<button onClick={() => this.fetchPosts('all')}>Fetch subreddit</button>
+				<div style={styles.topicsContainer}>
+					{/*<button onClick={() => this.fetchPosts('all')}>Fetch subreddit</button>*/}
+					<div style={styles.topic}>Popular</div>
+					<div style={styles.topic}>New</div>
+					<div style={styles.topic}>Rising</div>
+					<div style={styles.topic}>Controversial</div>
+					<div style={styles.topic}>Top</div>
+					<div style={styles.topic}>Gilded</div>
+					<div style={styles.topic}>Wiki</div>
 				</div>
 
-				<div style={styles.container}>
-					<div style={styles.postsContainer}>
-						{
-							!isEmpty(this.props.posts) &&
-							this.props.posts.map((post, index) => {
-								return <Card post={post} index={index} />
-							})
-						}
-					</div>
-				</div>
+				{this.renderPosts()}
 			</div>
 		)
 	}
