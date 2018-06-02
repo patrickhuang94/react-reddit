@@ -5,7 +5,6 @@ import { Provider } from 'react-redux'
 
 import App from './components/App'
 import Home from './components/home'
-import About from './components/about'
 import store, { history } from './store'
 
 import registerServiceWorker from './registerServiceWorker'
