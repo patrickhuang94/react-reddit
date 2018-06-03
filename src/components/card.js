@@ -5,6 +5,7 @@ import moment from 'moment'
 import TimeAgo from 'react-timeago'
 
 import colors from '../colors'
+import {digitsRounder} from '../utils'
 
 const styles = {
   cardContainer: {
@@ -61,7 +62,7 @@ class Card extends React.Component {
     const {post, index} = this.props
     const thumbnail = get(post, ['data', 'thumbnail'])
     const title = get(post, ['data', 'title'])
-    const score = get(post, ['data', 'score'])
+    const score = digitsRounder(get(post, ['data', 'score']))
     const createdAt = get(post, ['data', 'created'])
     const dateNow = Math.floor(Date.now() / 1000)
     const time = createdAt - dateNow
