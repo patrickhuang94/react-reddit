@@ -17,7 +17,8 @@ const styles = {
 		display: 'flex',
 		flexDirection: 'column',
 		backgroundColor: colors.gray,
-		width: '100%'
+		width: '100%',
+		padding: '0px 15px'
 	},
 	topicsContainer: {
 		backgroundColor: colors.gray,
@@ -27,12 +28,12 @@ const styles = {
 		alignItems: 'center'
 	},
 	topic: {
-		margin: '0px 10px'
+		marginRight: 20,
+		color: colors.darkGray
 	},
 	postsContainer: {
 		display: 'flex',
-		flexDirection: 'column',
-		margin: '0px 15px 15px'
+		flexDirection: 'column'
 	}
 }
 

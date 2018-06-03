@@ -4,16 +4,29 @@ import {get} from 'lodash'
 import moment from 'moment'
 import TimeAgo from 'react-timeago'
 
+import colors from '../colors'
+
 const styles = {
   cardContainer: {
     display: 'flex',
     backgroundColor: 'white',
-    padding: '14px 0px 10px 0px',
+    paddingTop: 20,
+    paddingBottom: 20,
     marginBottom: '15px'
   },
   scoreContainer: {
     padding: '10px',
-    minWidth: '50px'
+    minWidth: '50px',
+    fontSize: 16,
+    color: colors.darkGray
+  },
+  contentContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginLeft: 15,
+    marginRight: 10
   },
   titleContainer: {
     display: 'flex',
@@ -23,16 +36,21 @@ const styles = {
     padding: '15px'
   },
   titleText: {
-    margin: '0',
-    color: 'blue'
+    color: colors.darkBlue,
+    fontWeight: '600',
+    fontSize: 18,
+    marginBottom: 8
   },
   thumbnail: {
     width: '100px',
     height: '100px'
   },
-  scoreStyle: {
-    fontSize: 16,
-    color: 'gray'
+  subreddit: {
+    border: `1px solid ${colors.darkGray}`,
+    padding: '5px 8px'
+  },
+  username: {
+    color: colors.blue
   }
 }
 
@@ -48,25 +66,27 @@ class Card extends React.Component {
     const dateNow = Math.floor(Date.now() / 1000)
     const time = createdAt - dateNow
     const author = get(post, ['data', 'author'])
-    // console.log({createdAt, dateNow})
+    const subreddit = get(post, ['data', 'subreddit'])
     // const start = moment(createdAt,'HH:mm:ss')
     // const minutesPassed = moment().diff(start, 'minutes')
 
     return (
       <div style={styles.cardContainer} key={index}>
-        <div style={styles.scoreContainer}>
-          <p style={styles.scoreStyle}>{score}</p>
-        </div>
+        <div style={styles.scoreContainer}>{score}</div>
+        <img src={thumbnail} style={styles.thumbnail} />
 
-        <div>
-          <img src={thumbnail} style={styles.thumbnail} />
+        <div style={styles.contentContainer}>
+          <div>
+            <div style={styles.titleText}>{title}</div>
+            <div>
+              posted 3 hours ago by
+              <span style={styles.username}> u/{author}</span>
+            </div>
+          </div>  
+          <div style={styles.subreddit}>
+            r/{subreddit}
+          </div>
         </div>
-
-        <div style={styles.titleContainer}>
-          <p style={styles.titleText}>{title}</p>
-          <p style={{marginBottom: 0, marginTop: 0}}>Posted 3 hours ago by r/{author}</p>
-        </div>
-
       </div>
     )
   }
