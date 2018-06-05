@@ -33,9 +33,9 @@ class Header extends React.Component {
 			<div style={styles.headerContainer}>
 				<div style={styles.redditHeader}>reddit</div>
 				<Button
-					style={styles.login}
-					title="log in"
-					size="medium"
+					uppercase
+					title="login"
+					size="small"
 					onClick={this.handleLogin}
 				/>
 			</div>

@@ -10,23 +10,21 @@ const styles = {
   }
 }
 
-function textStyles ({color = 'white', type, size, bold, disabled}) {
+function textStyles ({color = 'white', uppercase, type, size, bold, disabled}) {
 
   const fontSize = size === 'small' ? 12 : size === 'large' ? 18 : 15
-
-  const base = {
-    fontWeight: bold || type === 'secondary' ? '700' : '400',
-    color,
-    fontSize
-  }
+  const fontWeight = bold || type === 'secondary' ? '700' : '400'
+  const textTransform = uppercase ? 'uppercase' : 'none'
 
   return {
-    ...base,
-    ...styles.text
+    fontWeight,
+    color,
+    fontSize,
+    textTransform
   }
 }
 
-function containerStyles ({color = colors.primary, disabled, size, type}) {
+function containerStyles ({color = colors.darkestGray, disabled, size, type}) {
 
   const backgroundColor = disabled ? colors.gray : type === 'inverted' ? 'white' : color
   const borderColor = disabled ? colors.gray : color
