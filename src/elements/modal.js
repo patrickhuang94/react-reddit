@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 
 const styles = {
-  modal: {
+  base: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -15,10 +15,23 @@ const styles = {
     zIndex: 999,
     backgroundColor: 'rgba(0, 0, 0, .65)'
   },
-  modalContent: {
-    width: '90%',
+  modal: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '80%',
     height: '80%',
     backgroundColor: 'white'
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    height: 50
+  },
+  closeButton: {
+    fontSize: 28,
+    margin: 15,
+    cursor: 'pointer'
   }
 }
 
@@ -27,25 +40,21 @@ class Modal extends React.Component {
   render () {
 
     return (
-      <div style={{...styles.modal, ...this.props.style}}>
-        <div style={styles.modalContent}>
+      <div style={{...styles.base, ...this.props.style}}>
+        <div style={styles.modal}>
+          <div style={styles.header}>
+            <span 
+              style={styles.closeButton}
+              onClick={this.props.handleClose}
+            >
+              <i className="fas fa-times"></i>
+            </span>
+          </div>
           {this.props.children}
         </div>
       </div>
     )
   }
 }
-// 
-// const Modal = ({ handleClose, show, children }) => {
-// 
-//   return (
-//     <div className={showHideClassname}>
-//       <section className="modal-main">
-//         {children}
-//         <button onClick={handleClose}>close</button>
-//       </section>
-//     </div>
-//   )
-// }
 
 export default Modal
