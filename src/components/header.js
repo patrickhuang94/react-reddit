@@ -3,8 +3,9 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 import Button from '../elements/button'
+import Modal from '../elements/modal'
 import colors from '../colors'
-import {fetchPosts} from '../actions'
+import {fetchPosts, showModal, hideModal} from '../actions'
 
 const styles = {
 	headerContainer: {
@@ -24,13 +25,28 @@ const styles = {
 class Header extends React.Component {
 
 	handleLogin = () => {
-		console.log('handleLogin clicked')
+
+		this.props.showModal('login')
+	}
+
+	renderLoginModal () {
+
+		if (this.props.ui.modalType === 'login') {
+			return (
+				<Modal>
+					<div>Modal here</div>
+				</Modal>
+			)
+		}
+
+		return null
 	}
 
 	render () {
 
 		return (
 			<div style={styles.headerContainer}>
+				{this.renderLoginModal()}
 				<div style={styles.redditHeader}>reddit</div>
 				<Button
 					uppercase
@@ -43,9 +59,17 @@ class Header extends React.Component {
 	}
 }
 
-function mapDispatchToProps (dispatch) {
+function mapStateToProps (state) {
 
-	return bindActionCreators({fetchPosts}, dispatch)
+	return {
+		ui: state.ui
+	}
 }
 
-export default connect(null, mapDispatchToProps)(Header)
+
+function mapDispatchToProps (dispatch) {
+
+	return bindActionCreators({fetchPosts, showModal, hideModal}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

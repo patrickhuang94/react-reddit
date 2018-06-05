@@ -1,4 +1,8 @@
-import {ADD_POSTS} from './actionTypes'
+import {
+  ADD_POSTS,
+  SHOW_MODAL,
+  HIDE_MODAL
+} from './actionTypes'
 
 import {get} from 'lodash'
 
@@ -33,5 +37,20 @@ export function addPosts (posts) {
   return {
     type: ADD_POSTS,
     payload: posts
+  }
+}
+
+export function showModal (type) {
+
+  return {
+    type: SHOW_MODAL,
+    modalType: type
+  }
+}
+
+export function hideModal () {
+
+  return {
+    type: HIDE_MODAL
   }
 }
