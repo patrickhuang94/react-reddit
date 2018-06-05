@@ -2,27 +2,42 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
+import Button from '../elements/button'
+import colors from '../colors'
 import {fetchPosts} from '../actions'
 
 const styles = {
 	headerContainer: {
 		display: 'flex',
+		justifyContent: 'space-between',
 		backgroundColor: 'white',
-		height: '70px'
+		margin: '20px 10px'
 	},
 	redditHeader: {
-    margin: '20px 15px 15px 10px',
     fontSize: 24,
-    color: 'black'
+    color: 'black',
+		display: 'flex',
+    alignItems: 'center'
   }
 }
 
 class Header extends React.Component {
-	render() {
+
+	handleLogin = () => {
+		console.log('handleLogin clicked')
+	}
+
+	render () {
 
 		return (
 			<div style={styles.headerContainer}>
 				<div style={styles.redditHeader}>reddit</div>
+				<Button
+					style={styles.login}
+					title="log in"
+					size="medium"
+					onClick={this.handleLogin}
+				/>
 			</div>
 		)
 	}
