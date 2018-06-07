@@ -13,15 +13,15 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    maxWidth: 400,
-    margin: '0 auto'
+    maxWidth: 500,
+    margin: '30px auto'
   },
   signInText: {
     fontSize: 18,
     marginBottom: 15
   },
   textField: {
-    marginBottom: 25,
+    marginBottom: 30,
     minWidth: 200
   },
   buttonStyle: {
@@ -43,12 +43,15 @@ class Login extends React.Component {
     return (
       <div>
         <InputText
-          label="Email"
+          iconName="fas fa-user"
           style={styles.textField}
+          bottomBorder
         />
         <InputText
-          label="Password"
+          iconName="fas fa-lock"
           style={styles.textField}
+          bottomBorder
+          password
         />
       </div>
     )

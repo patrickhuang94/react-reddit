@@ -4,24 +4,33 @@ import colors from '../colors'
 
 const styles = {
   input: {
-    borderWidth: 1,
     borderStyle: 'solid',
     borderColor: colors.border,
-    borderTopLeftRadius: 4,
-    borderTopRightRadius: 4,
-    borderBottomRightRadius: 4,
-    borderBottomLeftRadius: 4,
-    boxShadow: 'none',
+    outlineWidth: 0,
     paddingTop: 10,
     paddingRight: 12,
     paddingBottom: 10,
-    paddingLeft: 12,
+    paddingLeft: 36,
+    fontSize: 16,
     ':focus': {
       borderColor: colors.text
     }
   },
-  label: {
-    marginBottom: 5
+  icon: {
+    position: 'absolute',
+    top: 10,
+    left: 10
+  }
+}
+
+function inputStyles ({bottomBorder}) {
+
+  const borderWidth = bottomBorder ? '0 0 1px 0' : '1px'
+  const borderRadius = bottomBorder ? 0 : 4
+
+  return {
+    borderWidth,
+    borderRadius
   }
 }
 
@@ -30,10 +39,11 @@ class InputText extends React.Component {
   render () {
 
     return (
-      <div>
-        <div style={styles.label}>{this.props.label}</div>
+      <div style={{display: 'flex', position: 'relative'}}>
+        <span style={styles.icon}><i className={this.props.iconName}></i></span>
         <input
-          style={{...styles.input, ...this.props.style}}
+          style={{...inputStyles(this.props), ...styles.input, ...this.props.style}}
+          type={this.props.password ? 'password' : 'text'}
         />
       </div>
     )

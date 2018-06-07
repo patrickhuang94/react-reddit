@@ -18,8 +18,8 @@ const styles = {
   modal: {
     display: 'flex',
     flexDirection: 'column',
-    width: '80%',
-    height: '80%',
+    width: '45%',
+    height: '60%',
     backgroundColor: 'white'
   },
   header: {
