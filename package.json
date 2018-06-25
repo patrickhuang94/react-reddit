@@ -3,6 +3,8 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"axios": "^0.18.0",
+		"body-parser": "^1.18.3",
 		"lodash": "^4.17.10",
 		"moment": "^2.22.1",
 		"radium": "^0.24.0",
@@ -22,10 +24,12 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test --env=jsdom",
 		"eject": "react-scripts eject",
-                "deploy" : "npm run build&&gh-pages -d build"
+		"deploy": "npm run build&&gh-pages -d build"
 	},
 	"devDependencies": {
-		"gh-pages": "^1.2.0"
+		"gh-pages": "^1.2.0",
+		"nodemon": "^1.17.5"
 	},
-	"homepage": "https://patrickhuang94.github.io/react-reddit"
+	"homepage": "https://patrickhuang94.github.io/react-reddit",
+	"proxy": "http://localhost:3001/"
 }
