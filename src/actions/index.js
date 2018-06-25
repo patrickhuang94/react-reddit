@@ -20,6 +20,7 @@ export function fetchPosts ({sub, limit}) {
       credentials: 'same-origin'
     }
 
+    // TODO: make call to own server instead
     const fetchUrl = `https://www.reddit.com/r/${sub}.json?limit=${limit}`
     fetch(fetchUrl, options)
     .then(res => {
@@ -29,6 +30,29 @@ export function fetchPosts ({sub, limit}) {
       })
     })
     .catch(err => console.error(err))
+  }
+}
+
+export function callApi () {
+  console.log('ayo')
+  return (dispatch) => {
+
+    const options = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      },
+      cors: true,
+      credentials: 'same-origin'
+    }
+
+    const fetchUrl = '/api/test'
+    fetch(fetchUrl, options)
+    .then(res => {
+      console.log({res})
+    })
+    .catch(err => console.log(err))
   }
 }
 

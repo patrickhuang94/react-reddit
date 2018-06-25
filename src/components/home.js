@@ -39,10 +39,27 @@ const styles = {
 
 class Home extends React.Component {
 
+	state = {
+		response: ''
+	}
+
 	componentDidMount () {
 
 		this.fetchPosts('all')
+
+		this.callApi()
+			.then(res => this.setState({response: res}))
+			.catch(err => console.log(err))
 	}
+
+	callApi = async () => {
+    const response = await fetch('/api/fetch')
+    const body = await response.json()
+
+    if (response.status !== 200) throw Error(body.message)
+
+    return body
+  }
 
 	fetchPosts (subreddit) {
 
@@ -74,7 +91,7 @@ class Home extends React.Component {
 	}
 
 	render () {
-
+		console.log('bruh', this.state.response)
 		return (
 			<div style={styles.homeContainer}>
 				<div style={styles.topicsContainer}>
