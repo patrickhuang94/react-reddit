@@ -32,6 +32,15 @@ export function formatResponse (data) {
   return formattedPosts
 }
 
+export const openRedditOAuth = () => {
+
+  const REDDIT_CLIENT_ID = 'LeltpchMUToy9w' // TODO: Put in .env
+  const REDIRECT_URI = 'https://patrickhuang94.github.io/react-reddit/'
+  const url = `https://www.reddit.com/api/v1/authorize?client_id=${REDDIT_CLIENT_ID}&response_type=code&state=random_string_here&redirect_uri=${REDIRECT_URI}&duration=permanent&scope=identity`
+  // open reddit oauth page
+  window.location.assign(url)
+}
+
 // Private methods
 function insert (str, index, value) {
   return str.substr(0, index) + value + str.substr(index)

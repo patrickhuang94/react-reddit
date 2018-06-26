@@ -7,6 +7,7 @@ import Modal from '../elements/modal'
 import Login from './login'
 import colors from '../colors'
 import {showModal} from '../actions'
+import {openRedditOAuth}  from '../utils'
 
 const styles = {
 	headerContainer: {
@@ -28,12 +29,6 @@ class Header extends React.Component {
 	handleLogin = () => {
 
 		// this.props.showModal('login')
-
-		const REDDIT_CLIENT_ID = 'LeltpchMUToy9w' // TODO: Put in .env
-		const REDIRECT_URI = 'https://patrickhuang94.github.io/react-reddit/'
-		const url = `https://www.reddit.com/api/v1/authorize?client_id=${REDDIT_CLIENT_ID}&response_type=code&state=random_string_here&redirect_uri=${REDIRECT_URI}&duration=permanent&scope=identity`
-		// open reddit oauth page
-		window.location.assign(url)
 	}
 
 	render () {
@@ -46,7 +41,7 @@ class Header extends React.Component {
 					uppercase
 					title="login with reddit"
 					size="small"
-					onClick={this.handleLogin}
+					onClick={openRedditOAuth}
 				/>
 			</div>
 		)
