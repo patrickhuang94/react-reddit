@@ -60,14 +60,14 @@ class Card extends React.Component {
   render () {
 
     const {post, index} = this.props
-    const thumbnail = get(post, ['data', 'thumbnail'])
-    const title = get(post, ['data', 'title'])
-    const score = digitsRounder(get(post, ['data', 'score']))
-    const createdAt = get(post, ['data', 'created'])
+    const thumbnail = get(post, ['thumbnail'])
+    const title = get(post, ['title'])
+    const score = digitsRounder(get(post, ['score']))
+    const createdAt = get(post, ['created'])
     const dateNow = Math.floor(Date.now() / 1000)
     const time = createdAt - dateNow
-    const author = get(post, ['data', 'author'])
-    const subreddit = get(post, ['data', 'subreddit'])
+    const author = get(post, ['author'])
+    const subreddit = get(post, ['subreddit'])
     // const start = moment(createdAt,'HH:mm:ss')
     // const minutesPassed = moment().diff(start, 'minutes')
 

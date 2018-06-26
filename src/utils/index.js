@@ -1,4 +1,5 @@
-import {isUndefined} from 'lodash'
+import {isUndefined, get} from 'lodash'
+import {pipe, path, filter, reduce, values} from 'ramda'
 
 export function digitsRounder (digits) {
 
@@ -14,6 +15,21 @@ export function digitsRounder (digits) {
   }
 
   return digitString
+}
+
+export function formatResponse (data) {
+
+  const response = path(['data', 'data', 'children'])(data)
+
+  const formattedPosts = reduce((acc, post) => {
+
+    const filteredPost = path(['data'])(post)
+
+    acc.posts = [...acc.posts, filteredPost]
+    return acc
+  }, {posts: []})(values(response))
+
+  return formattedPosts
 }
 
 // Private methods
