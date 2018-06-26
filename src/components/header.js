@@ -27,9 +27,13 @@ class Header extends React.Component {
 
 	handleLogin = () => {
 
-		this.props.showModal('login')
+		// this.props.showModal('login')
 
-		// TODO: other stuff
+		const REDDIT_CLIENT_ID = 'LeltpchMUToy9w' // TODO: Put in .env
+		const REDIRECT_URI = 'http://localhost:3000'
+		const url = `https://www.reddit.com/api/v1/authorize?client_id=${REDDIT_CLIENT_ID}&response_type=code&state=random_string_here&redirect_uri=${REDIRECT_URI}&redirect_uri=permanent&scope=identity`
+		// open reddit oauth page
+		window.location.assign(url)
 	}
 
 	render () {
@@ -40,7 +44,7 @@ class Header extends React.Component {
 				<div style={styles.redditHeader}>reddit</div>
 				<Button
 					uppercase
-					title="login"
+					title="login with reddit"
 					size="small"
 					onClick={this.handleLogin}
 				/>

@@ -46,10 +46,6 @@ class Home extends React.Component {
 	componentDidMount () {
 
 		this.fetchPosts('all')
-
-		// this.callApi()
-		// 	.then(res => this.setState({response: res}))
-		// 	.catch(err => console.log(err))
 	}
 
 	fetchPosts (subreddit) {

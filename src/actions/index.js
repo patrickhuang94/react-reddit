@@ -27,11 +27,22 @@ export function fetchPosts ({sub, limit}) {
     return axios.get(fetchUrl)
     .then(res => {
       const formattedData = formatResponse(res)
-
-      console.log('response from fetchPosts action: ', formattedData)
       return dispatch(addPosts(formattedData))
     })
     .catch(err => console.error(err))
+  }
+}
+
+export function createAuthToken () {
+
+  return dispatch => {
+
+    const fetchUrl = '/api/auth'
+
+    return axios.post(fetchUrl)
+    .then(res => {
+      console.log('action response', res)
+    })
   }
 }
 
