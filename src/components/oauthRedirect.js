@@ -10,7 +10,7 @@ class OAuthRedirect extends React.Component {
 
     // do stuff with all the query param stuff
     this.props.getAccessToken({code: this.props.location.query.code})
-    alert(code)
+    alert(this.props.location.query.code)
     // then redirect back to /home
   }
 
