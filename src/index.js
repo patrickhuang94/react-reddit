@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 
 import App from './components/App'
 import Home from './components/home'
+import OAuthRedirect from './components/oauthRedirect'
 import store, { history } from './store'
 
 import registerServiceWorker from './registerServiceWorker'
@@ -17,6 +18,7 @@ const app = (
 			<div>
 				<Route path="/" component={App} />
 				<Route path="/home" component={Home} />
+				<Route path="/oauth" component={OAuthRedirect} />
 			</div>
 		</Router>
 	</Provider>
