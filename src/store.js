@@ -13,10 +13,9 @@ const middleware = [
 	routerMiddleware(history)
 ]
 
-const enhancer = compose(
-	applyMiddleware(...middleware),
-	// window.devToolsExtension ? window.devToolsExtension() : f => f
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const enhancer = composeEnhancers(
+	applyMiddleware(...middleware)
 )
 
 const store = createStore(
