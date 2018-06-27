@@ -33,13 +33,17 @@ export function fetchPosts ({sub, limit}) {
   }
 }
 
-export function createAuthToken () {
+export function getAccessToken ({code}) {
 
   return dispatch => {
 
+    // exchange code for an access token
     const fetchUrl = '/api/auth'
-
-    return axios.post(fetchUrl)
+    return axios({
+      method: 'POST',
+      url: fetchUrl,
+      data: {code}
+    })
     .then(res => {
       console.log('action response', res)
     })
