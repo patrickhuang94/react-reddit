@@ -42,7 +42,7 @@ export function getAccessToken ({code}) {
     return axios({
       method: 'POST',
       url: fetchUrl,
-      data: {code}
+      data: code
     })
     .then(res => {
       console.log('action response', res)

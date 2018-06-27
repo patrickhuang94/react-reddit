@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import queryString from 'query-string'
 
 import {getAccessToken} from '../actions'
 
@@ -8,10 +9,12 @@ class OAuthRedirect extends React.Component {
 
   componentDidMount () {
 
-    // do stuff with all the query param stuff
-    this.props.getAccessToken({code: this.props.location.query.code})
-    alert(this.props.location.query.code)
+    const code = queryString.parse(this.props.location.search)
+    console.log('code', code)
+    this.props.getAccessToken({code})
+
     // then redirect back to /home
+    // this.props.router.push('/home')
   }
 
   render () {
