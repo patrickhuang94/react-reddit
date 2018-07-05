@@ -9,13 +9,13 @@ const router = express.Router()
 // const REDDIT_AUTHORIZE_URL = `https://www.reddit.com/api/v1/authorize?client_id=${REDDIT_CLIENT_ID}&response_type="code"&state="random_string_here"&redirect_uri=${REDIRECT_URI}&redirect_uri=permanent&scope="identity"`
 
 router.post('/api/auth', async function (req, res, next) {
-  console.log('request???', req)
-  console.log('response???', res)
 
+  const code = req.body.code
   const params = {
-    code: req.body.code,
+    code,
     grant_type: 'authorization_code',
-    redirect_uri: 'https://patrickhuang94.github.io/react-reddit/oauth'
+    // redirect_uri: 'https://patrickhuang94.github.io/react-reddit/oauth'
+    redirct_uri: 'http://e54fa876.ngrok.io/oauth'
   }
 
   const url = 'https://www.reddit.com/api/v1/access_token'
@@ -24,7 +24,12 @@ router.post('/api/auth', async function (req, res, next) {
     form: params
   })
 
-  console.log({tokenData})
+  if (res.statusCode !== 200) {
+    // TODO: Handle error here
+    console.log('error...', res.body)
+  }
+
+  return res.status(200).send(code)
 })
 
 module.exports = router
