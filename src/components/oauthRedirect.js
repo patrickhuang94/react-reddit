@@ -10,14 +10,16 @@ class OAuthRedirect extends React.Component {
   componentDidMount () {
 
     const code = queryString.parse(this.props.location.search)
-    console.log('code', code)
     this.props.getAccessToken({code})
-
-    // then redirect back to /home
-    // this.props.router.push('/home')
+    .then(() => {
+      // then redirect back to /home
+      // this.props.router.push('/home')
+      return
+    })
   }
 
   render () {
+    // console.log('bro', this.props)
     return null
   }
 }

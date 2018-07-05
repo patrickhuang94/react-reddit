@@ -4,6 +4,7 @@ import {get} from 'lodash'
 import {formatResponse} from '../utils'
 import {
   ADD_POSTS,
+  ADD_ACCESS_TOKEN,
   SHOW_MODAL,
   HIDE_MODAL
 } from './actionTypes'
@@ -37,7 +38,7 @@ export function getAccessToken ({code}) {
 
   return dispatch => {
 
-    // exchange code for an access token
+    // after redirect, code is available in query params
     const fetchUrl = '/api/auth'
     return axios({
       method: 'POST',
@@ -45,8 +46,12 @@ export function getAccessToken ({code}) {
       data: code
     })
     .then(res => {
-      console.log('action response', res)
+      dispatch(addAccessToken({token: res.data}))
+
+      // TODO: redirect user back to homepage without the query params
+
     })
+    .catch(err => console.error('Something went wrong during access token retrieval: ', err))
   }
 }
 
@@ -55,6 +60,14 @@ export function addPosts ({posts}) {
   return {
     type: ADD_POSTS,
     payload: posts
+  }
+}
+
+export function addAccessToken ({token}) {
+
+  return {
+    type: ADD_ACCESS_TOKEN,
+    payload: token
   }
 }
 
