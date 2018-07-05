@@ -35,7 +35,8 @@ export function formatResponse (data) {
 export const openRedditOAuth = () => {
 
   const REDDIT_CLIENT_ID = 'LeltpchMUToy9w' // TODO: Put in .env
-  const REDIRECT_URI = 'https://patrickhuang94.github.io/react-reddit/oauth'
+  // const REDIRECT_URI = 'https://patrickhuang94.github.io/react-reddit/oauth'
+  const REDIRECT_URI = 'http://e54fa876.ngrok.io/oauth'
   const url = `https://www.reddit.com/api/v1/authorize?client_id=${REDDIT_CLIENT_ID}&response_type=code&state=random_string_here&redirect_uri=${REDIRECT_URI}&duration=permanent&scope=identity`
   // open reddit oauth page
   window.location.assign(url)
