@@ -2,12 +2,12 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import {fetchPosts} from '../actions'
+import {fetchPosts, fetchMe} from '../actions'
 import Card from './card'
 import Dropdown from '../elements/dropdown'
 import colors from '../colors'
 
-import {isEmpty} from 'lodash'
+import {isEmpty} from 'ramda'
 
 const styles = {
 	container: {
@@ -46,6 +46,10 @@ class Home extends React.Component {
 	componentDidMount () {
 
 		this.fetchPosts('all')
+
+		if (!isEmpty(this.props.authentication)) {
+			this.props.fetchMe()
+		}
 	}
 
 	fetchPosts (subreddit) {
@@ -100,13 +104,14 @@ class Home extends React.Component {
 
 function mapDispatchToProps (dispatch) {
 
-	return bindActionCreators({fetchPosts}, dispatch)
+	return bindActionCreators({fetchPosts, fetchMe}, dispatch)
 }
 
 function mapStateToProps (state) {
 
 	return {
-		posts: state.posts
+		posts: state.posts,
+		authentication: state.authentication
 	}
 }
 

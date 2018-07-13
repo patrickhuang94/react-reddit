@@ -1,9 +1,11 @@
 import axios from 'axios'
 import {get} from 'lodash'
 
+import store from '../store'
 import {formatResponse} from '../utils'
 import {
   ADD_POSTS,
+  ADD_USER,
   ADD_ACCESS_TOKEN,
   SHOW_MODAL,
   HIDE_MODAL
@@ -55,6 +57,28 @@ export function getAccessToken ({code}) {
   }
 }
 
+export function fetchMe () {
+
+  return dispatch => {
+
+    const state = store.getState()
+
+    const fetchUrl = '/api/me'
+    return axios({
+      method: 'GET',
+      url: fetchUrl,
+      params: {
+        token: state.authentication.accessToken
+      }
+    })
+    .then(res => {
+      const userData = path(['data'])(res)
+      return dispatch(addUserData({data: userData}))
+    })
+  }
+}
+
+// TODO: Put into separate file?
 export function addPosts ({posts}) {
 
   return {
@@ -68,6 +92,14 @@ export function addAccessToken ({token}) {
   return {
     type: ADD_ACCESS_TOKEN,
     payload: token
+  }
+}
+
+export function addUserData ({data}) {
+
+  return {
+    type: ADD_USER,
+    payload: data
   }
 }
 
