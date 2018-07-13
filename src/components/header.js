@@ -9,8 +9,6 @@ import colors from '../colors'
 import {showModal} from '../actions'
 import {openRedditOAuth}  from '../utils'
 
-import {isEmpty} from 'ramda'
-
 const styles = {
 	headerContainer: {
 		display: 'flex',
@@ -28,30 +26,23 @@ const styles = {
 
 class Header extends React.Component {
 
-	renderLogin () {
+	handleLogin = () => {
 
-		if (isEmpty(this.props.user)) {
-			return (
-				<Button
-					uppercase
-					title="login with reddit"
-					size="small"
-					onClick={openRedditOAuth}
-				/>
-			)
-		}
-
-		return (
-			<div>Welcome, {this.props.user.name}</div>
-		)
+		// this.props.showModal('login')
 	}
 
 	render () {
 
 		return (
 			<div style={styles.headerContainer}>
+				{this.props.ui.modalType === 'login' && <Login />}
 				<div style={styles.redditHeader}>reddit</div>
-				{this.renderLogin()}
+				<Button
+					uppercase
+					title="login with reddit"
+					size="small"
+					onClick={openRedditOAuth}
+				/>
 			</div>
 		)
 	}
@@ -60,7 +51,7 @@ class Header extends React.Component {
 function mapStateToProps (state) {
 
 	return {
-		user: state.user
+		ui: state.ui
 	}
 }
 
