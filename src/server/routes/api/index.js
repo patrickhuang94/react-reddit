@@ -2,18 +2,15 @@ const express = require('express')
 const request = require('request')
 
 const router = express.Router()
-// const REDIRECT_URI = 'https://patrickhuang94.github.io/react-reddit/'
-// const REDIRECT_URI = 'http://localhost:3000'
-// const REDDIT_AUTHORIZE_URL = `https://www.reddit.com/api/v1/authorize?client_id=${REDDIT_CLIENT_ID}&response_type="code"&state="random_string_here"&redirect_uri=${REDIRECT_URI}&redirect_uri=permanent&scope="identity"`
 
 router.post('/api/auth', async function (req, res, next) {
 
   const code = req.body.code
-  const params = {
+  const data = {
     code,
     grant_type: 'authorization_code',
     // redirect_uri: 'https://patrickhuang94.github.io/react-reddit/oauth'
-    redirct_uri: 'http://e54fa876.ngrok.io/oauth'
+    redirect_url: 'http://fe174f1a.ngrok.io/oauth'
   }
 
   const uri = 'https://www.reddit.com/api/v1/access_token'
@@ -31,20 +28,14 @@ router.post('/api/auth', async function (req, res, next) {
       console.log('ERROR: ', err)
     }
 
-    if (response.statusCode !== 200) {
-      console.log('status code: ', response.statusCode)
+    if (res.statusCode !== 200) {
+      // TODO: Handle error here
+      console.log('error...', res.body)
     }
 
-    const responseData = JSON.parse(response.body)
-    return res.status(200).send(responseData)
+    return res.status(200).send(code)
   })
 
-  if (res.statusCode !== 200) {
-    // TODO: Handle error here
-    console.log('error...', res.body)
-  }
-
-  return res.status(200).send(code)
 })
 
 router.get('/api/me', async function (req, res, next) {

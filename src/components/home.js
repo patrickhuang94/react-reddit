@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {router} from 'react-router'
 
 import {fetchPosts, fetchMe} from '../actions'
 import Card from './card'
@@ -58,11 +59,6 @@ class Home extends React.Component {
 			sub: subreddit,
 			limit: 10
 		})
-	}
-
-	onSelect = () => {
-
-		return
 	}
 
 	renderPosts () {

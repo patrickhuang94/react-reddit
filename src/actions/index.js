@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {get} from 'lodash'
+import {path} from 'ramda'
 
 import store from '../store'
 import {formatResponse} from '../utils'
@@ -47,12 +47,7 @@ export function getAccessToken ({code}) {
       url: fetchUrl,
       data: code
     })
-    .then(res => {
-      dispatch(addAccessToken({token: res.data}))
-
-      // TODO: redirect user back to homepage without the query params
-
-    })
+    .then(res => dispatch(addAccessToken({token: res.data})))
     .catch(err => console.error('Something went wrong during access token retrieval: ', err))
   }
 }

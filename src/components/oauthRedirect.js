@@ -19,7 +19,7 @@ class OAuthRedirect extends React.Component {
   }
 
   render () {
-    // console.log('bro', this.props)
+
     return null
   }
 }
