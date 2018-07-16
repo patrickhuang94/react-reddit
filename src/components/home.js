@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {router} from 'react-router'
 
 import {fetchPosts, fetchMe} from '../actions'
 import Card from './card'
@@ -39,10 +38,6 @@ const styles = {
 }
 
 class Home extends React.Component {
-
-	state = {
-		response: ''
-	}
 
 	componentDidMount () {
 
@@ -82,7 +77,6 @@ class Home extends React.Component {
 		return (
 			<div style={styles.homeContainer}>
 				<div style={styles.topicsContainer}>
-					{/*<button onClick={() => this.fetchPosts('all')}>Fetch subreddit</button>*/}
 					<div style={styles.topic}>Popular</div>
 					<div style={styles.topic}>New</div>
 					<div style={styles.topic}>Rising</div>
@@ -107,7 +101,8 @@ function mapStateToProps (state) {
 
 	return {
 		posts: state.posts,
-		authentication: state.authentication
+		authentication: state.authentication,
+		user: state.user
 	}
 }
 

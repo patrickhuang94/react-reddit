@@ -6,7 +6,7 @@ import {formatResponse} from '../utils'
 import {
   ADD_POSTS,
   ADD_USER,
-  ADD_ACCESS_TOKEN,
+  ADD_BEARER_TOKEN,
   SHOW_MODAL,
   HIDE_MODAL
 } from './actionTypes'
@@ -36,7 +36,7 @@ export function fetchPosts ({sub, limit}) {
   }
 }
 
-export function getAccessToken ({code}) {
+export function getBearerToken ({code}) {
 
   return dispatch => {
 
@@ -47,7 +47,10 @@ export function getAccessToken ({code}) {
       url: fetchUrl,
       data: code
     })
-    .then(res => dispatch(addAccessToken({token: res.data})))
+    .then(res => {
+      const bearerToken = path(['data'])(res)
+      return dispatch(addBearerToken({bearerToken}))
+    })
     .catch(err => console.error('Something went wrong during access token retrieval: ', err))
   }
 }
@@ -59,17 +62,16 @@ export function fetchMe () {
     const state = store.getState()
 
     const fetchUrl = '/api/me'
-    return axios({
-      method: 'GET',
-      url: fetchUrl,
+    return axios.get(fetchUrl, {
       params: {
-        token: state.authentication.accessToken
+        token: state.authentication.access_token
       }
     })
     .then(res => {
       const userData = path(['data'])(res)
       return dispatch(addUserData({data: userData}))
     })
+    .catch(err => console.error(err))
   }
 }
 
@@ -82,11 +84,11 @@ export function addPosts ({posts}) {
   }
 }
 
-export function addAccessToken ({token}) {
+export function addBearerToken ({bearerToken}) {
 
   return {
-    type: ADD_ACCESS_TOKEN,
-    payload: token
+    type: ADD_BEARER_TOKEN,
+    payload: bearerToken
   }
 }
 
