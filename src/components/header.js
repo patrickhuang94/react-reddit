@@ -26,11 +26,6 @@ const styles = {
 
 class Header extends React.Component {
 
-	handleLogin = () => {
-
-		// this.props.showModal('login')
-	}
-
 	render () {
 
 		return (
