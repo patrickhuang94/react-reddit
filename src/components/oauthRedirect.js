@@ -1,21 +1,21 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import {bindActionCreators} from 'redux'
 import queryString from 'query-string'
 
-import {getAccessToken} from '../actions'
+import {getBearerToken} from '../actions'
+
+import {isEmpty} from 'ramda'
 
 class OAuthRedirect extends React.Component {
 
   componentDidMount () {
 
     const code = queryString.parse(this.props.location.search)
-    this.props.getAccessToken({code})
-    .then(() => {
-      // then redirect back to /home
-      // this.props.router.push('/home')
-      return
-    })
+
+    this.props.getBearerToken({code})
+      .then(() => this.props.history.push('/home'))
   }
 
   render () {
@@ -26,7 +26,7 @@ class OAuthRedirect extends React.Component {
 
 function mapDispatchToProps (dispatch) {
 
-	return bindActionCreators({getAccessToken}, dispatch)
+	return bindActionCreators({getBearerToken}, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(OAuthRedirect)
+export default withRouter(connect(null, mapDispatchToProps)(OAuthRedirect))
