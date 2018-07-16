@@ -10,11 +10,10 @@ router.post('/api/auth', async function (req, res, next) {
     code,
     grant_type: 'authorization_code',
     // redirect_uri: 'https://patrickhuang94.github.io/react-reddit/oauth'
-    redirect_url: 'http://fe174f1a.ngrok.io/oauth'
+    redirect_uri: 'http://fe174f1a.ngrok.io/oauth'
   }
 
   const uri = 'https://www.reddit.com/api/v1/access_token'
-
   // reddit expects x-www-form-urlencoded which is defaulted with 'auth', not 'headers'
   const tokenData = await request.post({
     uri,
@@ -26,14 +25,16 @@ router.post('/api/auth', async function (req, res, next) {
   }, (err, response) => {
     if (err) {
       console.log('ERROR: ', err)
+      return
     }
 
     if (res.statusCode !== 200) {
       // TODO: Handle error here
-      console.log('error...', res.body)
+      console.log('status code error', res.body)
+      return
     }
 
-    return res.status(200).send(code)
+    return res.status(200).send(response.body)
   })
 
 })
@@ -53,13 +54,14 @@ router.get('/api/me', async function (req, res, next) {
   }, (err, response) => {
     if (err) {
       console.log('ERROR: ', err)
+      return
     }
 
     if (response.statusCode !== 200) {
-      console.log('status code: ', response.statusCode)
+      console.log('status code error', response)
+      return
     }
 
-    console.log('server response', JSON.parse(response.body))
     const responseData = JSON.parse(response.body)
     return res.status(200).send(responseData)
   })
