@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {isEmpty} from 'ramda'
 
 import Button from '../elements/button'
 import Modal from '../elements/modal'
@@ -21,7 +22,11 @@ const styles = {
     color: 'black',
 		display: 'flex',
     alignItems: 'center'
-  }
+  },
+	username: {
+		display: 'flex',
+		alignItems: 'center'
+	}
 }
 
 class Header extends React.Component {
@@ -32,12 +37,16 @@ class Header extends React.Component {
 			<div style={styles.headerContainer}>
 				{this.props.ui.modalType === 'login' && <Login />}
 				<div style={styles.redditHeader}>reddit</div>
-				<Button
-					uppercase
-					title="login with reddit"
-					size="small"
-					onClick={openRedditOAuth}
-				/>
+				{
+					isEmpty(this.props.user) ?
+					<Button
+						uppercase
+						title="login with reddit"
+						size="small"
+						onClick={openRedditOAuth}
+					/> :
+					<div style={styles.username}>Hi, {this.props.user.name}</div>
+				}
 			</div>
 		)
 	}
@@ -46,7 +55,8 @@ class Header extends React.Component {
 function mapStateToProps (state) {
 
 	return {
-		ui: state.ui
+		ui: state.ui,
+		user: state.user
 	}
 }
 

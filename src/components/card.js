@@ -1,6 +1,8 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
-import {get} from 'lodash'
+import {path, isEmpty} from 'ramda'
 import moment from 'moment'
 import TimeAgo from 'react-timeago'
 
@@ -16,6 +18,10 @@ const styles = {
     marginBottom: '15px'
   },
   scoreContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: '10px',
     minWidth: '50px',
     fontSize: 16,
@@ -52,30 +58,59 @@ const styles = {
   },
   username: {
     color: colors.blue
+  },
+  arrow: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    fontSize: 14,
+    color: colors.darkestGray,
+    cursor: 'pointer',
+    ':hover': {
+      color: 'white',
+      cursor: 'pointer'
+    }
   }
 }
 
 class Card extends React.Component {
 
+  renderScore (score) {
+
+    if (isEmpty(this.props.user)) {
+      return (
+        <div style={styles.scoreContainer}>
+          <div>{score}</div>
+        </div>
+      )
+    }
+
+    return (
+      <div style={styles.scoreContainer}>
+        <div style={styles.arrow}><i className="fas fa-arrow-up"></i></div>
+          <div>{score}</div>
+        <div style={styles.arrow}><i className="fas fa-arrow-down"></i></div>
+      </div>
+    )
+  }
+
   render () {
 
     const {post, index} = this.props
-    const thumbnail = get(post, ['thumbnail'])
-    const title = get(post, ['title'])
-    const score = digitsRounder(get(post, ['score']))
-    const createdAt = get(post, ['created'])
+    const thumbnail = path(['thumbnail'])(post)
+    const title = path(['title'])(post)
+    const score = digitsRounder(path(['score'])(post))
+    const createdAt = path(['created'])(post)
     const dateNow = Math.floor(Date.now() / 1000)
     const time = createdAt - dateNow
-    const author = get(post, ['author'])
-    const subreddit = get(post, ['subreddit'])
+    const author = path(['author'])(post)
+    const subreddit = path(['subreddit'])(post)
     // const start = moment(createdAt,'HH:mm:ss')
     // const minutesPassed = moment().diff(start, 'minutes')
 
     return (
       <div style={styles.cardContainer} key={index}>
-        <div style={styles.scoreContainer}>{score}</div>
+        {this.renderScore(score)}
         <img src={thumbnail} style={styles.thumbnail} />
-
         <div style={styles.contentContainer}>
           <div>
             <div style={styles.titleText}>{title}</div>
@@ -83,7 +118,7 @@ class Card extends React.Component {
               posted 3 hours ago by
               <span style={styles.username}> u/{author}</span>
             </div>
-          </div>  
+          </div>
           <div style={styles.subreddit}>
             r/{subreddit}
           </div>
@@ -93,4 +128,11 @@ class Card extends React.Component {
   }
 }
 
-export default Card
+function mapStateToProps (state) {
+
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, null)(Card)
