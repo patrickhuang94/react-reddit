@@ -5,7 +5,7 @@ import colors from '../colors'
 
 const styles = {
   leftMenu: {
-		width: '200px',
+		minWidth: '200px',
 		display: 'flex',
 		flexDirection: 'column',
 		backgroundColor: colors.darkestGray
