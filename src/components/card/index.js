@@ -1,13 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 
 import {path, isEmpty} from 'ramda'
 import moment from 'moment'
 import TimeAgo from 'react-timeago'
 
-import colors from '../colors'
-import {digitsRounder} from '../utils'
+import colors from '../../colors'
+import {digitsRounder} from '../../utils'
 
 const styles = {
   cardContainer: {
