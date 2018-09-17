@@ -1,5 +1,8 @@
 import React from 'react'
 import Radium from 'radium'
+import {connect} from 'react-redux'
+
+import {isEmpty} from 'ramda'
 
 import colors from '../colors'
 
@@ -20,11 +23,11 @@ const styles = {
     color: 'white'
   },
   menuOptions: {
-    marginTop: 15,
-    marginBottom: 15
+    margin: 15
   },
   menuOption: {
-    padding: '18px',
+    paddingTop: 18,
+    paddingBottom: 18,
     fontSize: 16,
     color: colors.lightestGray,
     cursor: 'pointer',
@@ -35,10 +38,27 @@ const styles = {
   },
   icon: {
     marginRight: 10
+  },
+  mySubreddits: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  mySubredditsTitle: {
+    fontSize: 18,
+    color: 'white'
   }
 }
 
 class Menu extends React.Component {
+
+  renderMySubreddits() {
+
+    return (
+      <div style={styles.mySubreddits}>
+        <p style={styles.mySubredditsTitle}>My Subreddits</p>
+      </div>
+    )
+  }
 
   renderMenuOptions () {
 
@@ -60,6 +80,8 @@ class Menu extends React.Component {
           <span style={styles.icon}><i className="fas fa-random"></i></span>
           Random
         </div>
+
+        {!isEmpty(this.props.user) && this.renderMySubreddits()}
       </div>
     )
   }
@@ -77,4 +99,8 @@ class Menu extends React.Component {
   }
 }
 
-export default Radium(Menu)
+const mapStateToProps = (state) => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps, null)(Radium(Menu))

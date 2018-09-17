@@ -10,3 +10,4 @@ export const ADD_BEARER_TOKEN = 'ADD_BEARER_TOKEN'
 
 // user
 export const ADD_USER = 'ADD_USER'
+export const ADD_USER_SUBREDDITS = 'ADD_USER_SUBREDDITS'

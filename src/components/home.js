@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 
 import {fetchPosts, fetchMe} from '../actions'
 import Card from './card'
@@ -62,7 +61,6 @@ class Home extends React.Component {
 			<div style={styles.container}>
 				<div style={styles.postsContainer}>
 					{
-						!isEmpty(this.props.posts) &&
 						this.props.posts.map((post, index) => {
 							return <Card post={post} index={index} />
 						})
@@ -86,24 +84,21 @@ class Home extends React.Component {
 					<div style={styles.topic}>Wiki</div>
 				</div>
 
-				{this.renderPosts()}
+				{!isEmpty(this.props.posts) && this.renderPosts()}
 			</div>
 		)
 	}
 }
 
-function mapDispatchToProps (dispatch) {
+const mapDispatchToProps = (dispatch) => ({
+	fetchPosts: ({sub, limit}) => dispatch(fetchPosts({sub, limit})),
+	fetchMe: () => dispatch(fetchMe)
+})
 
-	return bindActionCreators({fetchPosts, fetchMe}, dispatch)
-}
-
-function mapStateToProps (state) {
-
-	return {
-		posts: state.posts,
-		authentication: state.authentication,
-		user: state.user
-	}
-}
+const mapStateToProps = (state) => ({
+	posts: state.posts.data,
+	authentication: state.authentication,
+	user: state.user
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

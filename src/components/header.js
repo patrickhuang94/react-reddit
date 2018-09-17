@@ -1,11 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {isEmpty} from 'ramda'
+import {isEmpty, path} from 'ramda'
 
 import Button from '../elements/button'
 import Modal from '../elements/modal'
-import Login from './login'
 import colors from '../colors'
 import {showModal} from '../actions'
 import {openRedditOAuth}  from '../utils'
@@ -23,46 +21,60 @@ const styles = {
 		display: 'flex',
     alignItems: 'center'
   },
-	username: {
+	userContainer: {
 		display: 'flex',
-		alignItems: 'center'
+		flexDirection: 'column'
+	},
+	username: {
+		// something
+		fontSize: 16
+	},
+	karma: {
+		fontSize: 16,
+		marginTop: 5
 	}
 }
 
 class Header extends React.Component {
 
+	renderLogin () {
+		if (isEmpty(this.props.user)) {
+			return (
+				<Button
+					uppercase
+					title="login with reddit"
+					size="small"
+					onClick={openRedditOAuth}
+				/>
+			)
+		}
+
+		const username = path(['data', 'name'])(this.props.user)
+		const linkKarma = path(['data', 'link_karma'])(this.props.user)
+		const commentKarma = path(['data', 'comment_karma'])(this.props.user)
+		const totalKarma = linkKarma + commentKarma
+
+		return (
+			<div style={styles.userContainer}>
+				<div style={styles.username}>Hi, {username}</div>
+				<div style={styles.karma}>{totalKarma} karma</div>
+			</div>
+		)
+	}
+
 	render () {
 
 		return (
 			<div style={styles.headerContainer}>
-				{this.props.ui.modalType === 'login' && <Login />}
 				<div style={styles.redditHeader}>reddit</div>
-				{
-					isEmpty(this.props.user) ?
-					<Button
-						uppercase
-						title="login with reddit"
-						size="small"
-						onClick={openRedditOAuth}
-					/> :
-					<div style={styles.username}>Hi, {this.props.user.name}</div>
-				}
+				{this.renderLogin()}
 			</div>
 		)
 	}
 }
 
-function mapStateToProps (state) {
+const mapStateToProps = (state) => ({
+	user: state.user
+})
 
-	return {
-		ui: state.ui,
-		user: state.user
-	}
-}
-
-function mapDispatchToProps (dispatch) {
-
-	return bindActionCreators({showModal}, dispatch)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default connect(mapStateToProps, null)(Header)

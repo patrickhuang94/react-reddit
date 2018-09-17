@@ -10,12 +10,11 @@ import {isEmpty} from 'ramda'
 
 class OAuthRedirect extends React.Component {
 
-  componentDidMount () {
+  async componentDidMount () {
 
     const code = queryString.parse(this.props.location.search)
-
-    this.props.getBearerToken({code})
-      .then(() => this.props.history.push('/home'))
+    await this.props.getBearerToken({code})
+    this.props.history.push('/home')
   }
 
   render () {
@@ -24,9 +23,8 @@ class OAuthRedirect extends React.Component {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-
-	return bindActionCreators({getBearerToken}, dispatch)
-}
+const mapDispatchToProps = (dispatch) => ({
+  getBearerToken: ({code}) => dispatch(getBearerToken({code}))
+})
 
 export default withRouter(connect(null, mapDispatchToProps)(OAuthRedirect))
