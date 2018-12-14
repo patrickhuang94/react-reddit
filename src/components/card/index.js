@@ -1,12 +1,12 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
-import {path, isEmpty} from 'ramda'
-import moment from 'moment'
-import TimeAgo from 'react-timeago'
+import { get, isEmpty } from 'lodash'
+// import moment from 'moment'
+// import TimeAgo from 'react-timeago'
 
 import colors from '../../colors'
-import {digitsRounder} from '../../utils'
+import { digitsRounder } from '../../utils'
 
 const styles = {
   cardContainer: {
@@ -95,14 +95,14 @@ class Card extends React.Component {
   render () {
 
     const {post, index} = this.props
-    const thumbnail = path(['thumbnail'])(post)
-    const title = path(['title'])(post)
-    const score = digitsRounder(path(['score'])(post))
-    const createdAt = path(['created'])(post)
+    const thumbnail = get(post, 'thumbnail')
+    const title = get(post, 'title')
+    const score = digitsRounder(get(post, 'score'))
+    const createdAt = get(post, 'created')
     const dateNow = Math.floor(Date.now() / 1000)
     const time = createdAt - dateNow
-    const author = path(['author'])(post)
-    const subreddit = path(['subreddit'])(post)
+    const author = get(post, 'author')
+    const subreddit = get(post, 'subreddit')
     // const start = moment(createdAt,'HH:mm:ss')
     // const minutesPassed = moment().diff(start, 'minutes')
 

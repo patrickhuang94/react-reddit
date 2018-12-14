@@ -1,9 +1,9 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {isEmpty, path} from 'ramda'
+import { connect } from 'react-redux'
+import { isEmpty, get } from 'lodash'
 
 import Button from '../elements/button'
-import {openRedditOAuth}  from '../utils'
+import { openRedditOAuth }  from '../utils'
 
 const styles = {
 	headerContainer: {
@@ -48,9 +48,9 @@ class Header extends React.Component {
 			)
 		}
 
-		const username = path(['data', 'name'])(this.props.user)
-		const linkKarma = path(['data', 'link_karma'])(this.props.user)
-		const commentKarma = path(['data', 'comment_karma'])(this.props.user)
+		const username = get(this.props.user, 'data.name',)
+		const linkKarma = get(this.props.user, 'data.link_karma')
+		const commentKarma = get(this.props.user, 'data.comment_karma')
 		const totalKarma = linkKarma + commentKarma
 
 		return (

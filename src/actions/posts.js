@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {ADD_POSTS} from './actionTypes'
-import {formatResponse} from '../utils'
+import { ADD_POSTS } from './actionTypes'
+import { formatPosts } from '../utils'
 
 export const fetchPosts = ({sub, limit}) => async (dispatch) => {
   const options = {
@@ -16,9 +16,9 @@ export const fetchPosts = ({sub, limit}) => async (dispatch) => {
   const fetchUrl = `https://www.reddit.com/r/${sub}.json`
 
   try {
-    const response = await axios.get(fetchUrl)
-    const formattedData = formatResponse(response)
-    dispatch(addPosts(formattedData))
+    const fetchedPosts = await axios.get(fetchUrl)
+    const formattedPosts = formatPosts(fetchedPosts)
+    dispatch(addPosts(formattedPosts))
   } catch (err) {
     console.log('error while fetching posts: ', err)
   }

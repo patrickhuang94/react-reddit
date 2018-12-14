@@ -1,9 +1,9 @@
 import React from 'react'
 import Radium from 'radium'
-import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
-import {isEmpty} from 'ramda'
+import { isEmpty } from 'lodash'
 
 import colors from '../colors'
 

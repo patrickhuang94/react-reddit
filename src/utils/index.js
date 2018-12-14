@@ -1,5 +1,4 @@
-import {isUndefined, get} from 'lodash'
-import {pipe, path, filter, reduce, values} from 'ramda'
+import { isUndefined, get } from 'lodash'
 
 const insert = (str, index, value) => str.substr(0, index) + value + str.substr(index)
 const replace = (str, index, value) => str.substr(0, index) + value
@@ -18,15 +17,15 @@ export const digitsRounder = digits => {
   return digitString
 }
 
-export const formatResponse = data => {
-  const response = path(['data', 'data', 'children'])(data)
-  const formattedPosts = reduce((acc, post) => {
-    const filteredPost = path(['data'])(post)
-    acc.posts = [...acc.posts, filteredPost]
-    return acc
-  }, {posts: []})(values(response))
-
-  return formattedPosts
+export const formatPosts = posts => {
+  const response = get(posts, 'data.data.children')
+  if (response) {
+    return response.reduce((acc, post) => {
+      const filteredPost = get(post, 'data')
+      acc.posts = [...acc.posts, filteredPost]
+      return acc
+    }, { posts: [] })
+  }
 }
 
 export const openRedditOAuth = () => {

@@ -1,12 +1,12 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
-import {fetchPosts, fetchMe} from '../actions'
+import { fetchPosts, fetchMe } from '../actions'
 import Card from './card'
 // import Dropdown from '../elements/dropdown'
 import colors from '../colors'
 
-import {isEmpty} from 'ramda'
+import { isEmpty } from 'lodash'
 
 const styles = {
 	container: {

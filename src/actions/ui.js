@@ -1,4 +1,4 @@
-import {SHOW_MODAL, HIDE_MODAL} from './actionTypes'
+import { SHOW_MODAL, HIDE_MODAL } from './actionTypes'
 
 export const showModal = (type) => ({
   type: SHOW_MODAL,

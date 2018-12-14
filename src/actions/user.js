@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {path} from 'ramda'
-import {ADD_USER} from './actionTypes'
+import { get } from 'lodash'
+import { ADD_USER } from './actionTypes'
 
 export const fetchMe = () => async (dispatch, getState) => {
   const state = getState()
@@ -11,8 +11,8 @@ export const fetchMe = () => async (dispatch, getState) => {
       params: { token }
     })
 
-    const userData = path(['data'])(results)
-    dispatch(addUserData({data: userData}))
+    const userData = get(results, 'data')
+    dispatch(addUserData({ data: userData }))
 
     return axios.get('/api/me/subreddits', {
       params: { token }

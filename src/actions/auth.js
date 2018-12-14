@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {ADD_BEARER_TOKEN} from './actionTypes'
-import {path} from 'ramda'
+import { ADD_BEARER_TOKEN } from './actionTypes'
+import { get } from 'lodash'
 
 export const addBearerToken = ({bearerToken}) => ({
   type: ADD_BEARER_TOKEN,
@@ -17,7 +17,7 @@ export const getBearerToken = ({code}) => async (dispatch) => {
       data: code
     })
 
-    const bearerToken = path(['data'])(result)
+    const bearerToken = get(result, 'data')
     return null ? bearerToken.error : dispatch(addBearerToken({bearerToken}))
   } catch (err) {
     console.error('Something went wrong during access token retrieval: ', err)
