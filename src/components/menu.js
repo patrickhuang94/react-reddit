@@ -1,6 +1,7 @@
 import React from 'react'
 import Radium from 'radium'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 
 import {isEmpty} from 'ramda'
 
@@ -51,6 +52,10 @@ const styles = {
 
 class Menu extends React.Component {
 
+  handleMenuSelect = (route) => {
+    this.props.history.push(route)
+  }
+
   renderMySubreddits() {
 
     return (
@@ -68,7 +73,7 @@ class Menu extends React.Component {
           <span style={styles.icon}><i className="fas fa-home"></i></span>
           Home
         </div>
-        <div style={styles.menuOption} key="popular">
+        <div style={styles.menuOption} key="popular" onClick={() => this.handleMenuSelect('popular')}>
           <span style={styles.icon}><i className="fas fa-heart"></i></span>
           Popular
         </div>
@@ -103,4 +108,4 @@ const mapStateToProps = (state) => ({
   user: state.user
 })
 
-export default connect(mapStateToProps, null)(Radium(Menu))
+export default withRouter(connect(mapStateToProps, null)(Radium(Menu)))

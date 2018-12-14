@@ -3,9 +3,6 @@ import {connect} from 'react-redux'
 import {isEmpty, path} from 'ramda'
 
 import Button from '../elements/button'
-import Modal from '../elements/modal'
-import colors from '../colors'
-import {showModal} from '../actions'
 import {openRedditOAuth}  from '../utils'
 
 const styles = {
@@ -26,7 +23,6 @@ const styles = {
 		flexDirection: 'column'
 	},
 	username: {
-		// something
 		fontSize: 16
 	},
 	karma: {
@@ -35,9 +31,12 @@ const styles = {
 	}
 }
 
-class Header extends React.Component {
+const mapStateToProps = (state) => ({
+	user: state.user
+})
 
-	renderLogin () {
+class Header extends React.Component {
+	renderLogin = () => {
 		if (isEmpty(this.props.user)) {
 			return (
 				<Button
@@ -63,7 +62,6 @@ class Header extends React.Component {
 	}
 
 	render () {
-
 		return (
 			<div style={styles.headerContainer}>
 				<div style={styles.redditHeader}>reddit</div>
@@ -72,9 +70,5 @@ class Header extends React.Component {
 		)
 	}
 }
-
-const mapStateToProps = (state) => ({
-	user: state.user
-})
 
 export default connect(mapStateToProps, null)(Header)

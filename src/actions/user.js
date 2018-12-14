@@ -8,18 +8,14 @@ export const fetchMe = () => async (dispatch, getState) => {
 
   try {
     const results = await axios.get('/api/me', {
-      params: {
-        token,
-      }
+      params: { token }
     })
 
     const userData = path(['data'])(results)
     dispatch(addUserData({data: userData}))
 
     return axios.get('/api/me/subreddits', {
-      params: {
-        token,
-      }
+      params: { token }
     })
   } catch (err) {
     console.error('error fetching user data')
