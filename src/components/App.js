@@ -1,9 +1,9 @@
 import React from 'react'
 
 import Header from './header'
-import Layout from './layout'
+import Menu from './menu'
+import Home from './home'
 
-import logo from '../logo.svg'
 import '../App.css'
 
 const styles = {
@@ -11,20 +11,22 @@ const styles = {
 		display: 'flex',
 		flexDirection:' column',
 		height: '100%'
+	},
+	page: {
+		display: 'flex'
 	}
 }
 
-class App extends React.Component {
-
-	render() {
-
-		return (
-			<div style={styles.mainContainer}>
-				<Header />
-				<Layout />
+const App = () => {
+	return (
+		<div style={styles.mainContainer}>
+			<Header />
+			<div style={styles.page}>
+				<Menu />
+				<Home />
 			</div>
-		)
-	}
+		</div>
+	)
 }
 
 export default App
