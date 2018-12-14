@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 import {fetchPosts, fetchMe} from '../actions'
 import Card from './card'
-import Dropdown from '../elements/dropdown'
+// import Dropdown from '../elements/dropdown'
 import colors from '../colors'
 
 import {isEmpty} from 'ramda'
@@ -36,10 +36,19 @@ const styles = {
 	}
 }
 
+const mapDispatchToProps = (dispatch) => ({
+	fetchPosts: ({sub, limit}) => dispatch(fetchPosts({sub, limit})),
+	fetchMe: () => dispatch(fetchMe())
+})
+
+const mapStateToProps = (state) => ({
+	posts: state.posts.data,
+	authentication: state.authentication,
+	user: state.user
+})
+
 class Home extends React.Component {
-
 	componentDidMount () {
-
 		this.fetchPosts('all')
 
 		if (!isEmpty(this.props.authentication)) {
@@ -48,7 +57,6 @@ class Home extends React.Component {
 	}
 
 	fetchPosts (subreddit) {
-
 		this.props.fetchPosts({
 			sub: subreddit,
 			limit: 10
@@ -56,22 +64,16 @@ class Home extends React.Component {
 	}
 
 	renderPosts () {
-
 		return (
 			<div style={styles.container}>
 				<div style={styles.postsContainer}>
-					{
-						this.props.posts.map((post, index) => {
-							return <Card post={post} index={index} />
-						})
-					}
+					{this.props.posts.map((post, index) => <Card post={post} index={index} />)}
 				</div>
 			</div>
 		)
 	}
 
 	render () {
-
 		return (
 			<div style={styles.homeContainer}>
 				<div style={styles.topicsContainer}>
@@ -89,16 +91,5 @@ class Home extends React.Component {
 		)
 	}
 }
-
-const mapDispatchToProps = (dispatch) => ({
-	fetchPosts: ({sub, limit}) => dispatch(fetchPosts({sub, limit})),
-	fetchMe: () => dispatch(fetchMe)
-})
-
-const mapStateToProps = (state) => ({
-	posts: state.posts.data,
-	authentication: state.authentication,
-	user: state.user
-})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

@@ -4,13 +4,12 @@ const request = require('request')
 const router = express.Router()
 
 router.post('/api/auth', async function (req, res, next) {
-
   const code = req.body.code
   const data = {
     code,
     grant_type: 'authorization_code',
     // redirect_uri: 'https://patrickhuang94.github.io/react-reddit/oauth'
-    redirect_uri: 'http://fe174f1a.ngrok.io/oauth'
+    redirect_uri: `${process.env.HOST_URL}/oauth`,
   }
 
   const uri = 'https://www.reddit.com/api/v1/access_token'
@@ -36,18 +35,45 @@ router.post('/api/auth', async function (req, res, next) {
 
     return res.status(200).send(response.body)
   })
-
 })
 
+// all the methods below are authorized requests
 router.get('/api/me', async function (req, res, next) {
-
   const uri = 'https://oauth.reddit.com/api/v1/me'
   const token = req.query.token
   const auth = {'bearer': token}
   // gives back 403 without this headers set
   const headers = {'User-Agent': 'client'}
-
+  console.log('hello?')
   const data = await request.get({
+    uri,
+    auth,
+    headers
+  }, (err, response) => {
+    console.log('errorrororororro', err)
+    if (err) {
+      console.log('ERROR: ', err)
+      return
+    }
+
+    if (response.statusCode !== 200) {
+      console.log('status code error', response)
+      return
+    }
+
+    const responseData = JSON.parse(response.body)
+    console.log('response!!!!!', responseData)
+    return res.status(200).send(responseData)
+  })
+})
+
+router.get('api/me/subreddits', async function (req, res, next) {
+  const uri = 'https://oauth.reddit.com/subreddits/mine/subscriber'
+  const token = req.query.token
+  const auth = {'bearer': token}
+  // gives back 403 without this headers set
+  const headers = {'User-Agent': 'client'}
+  const subreddits = await request.get({
     uri,
     auth,
     headers
@@ -61,7 +87,7 @@ router.get('/api/me', async function (req, res, next) {
       console.log('status code error', response)
       return
     }
-
+    console.log({response})
     const responseData = JSON.parse(response.body)
     return res.status(200).send(responseData)
   })
