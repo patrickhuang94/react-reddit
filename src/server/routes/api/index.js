@@ -44,13 +44,11 @@ router.get('/api/me', async function (req, res, next) {
   const auth = {'bearer': token}
   // gives back 403 without this headers set
   const headers = {'User-Agent': 'client'}
-  console.log('hello?')
   const data = await request.get({
     uri,
     auth,
     headers
   }, (err, response) => {
-    console.log('errorrororororro', err)
     if (err) {
       console.log('ERROR: ', err)
       return
@@ -62,7 +60,6 @@ router.get('/api/me', async function (req, res, next) {
     }
 
     const responseData = JSON.parse(response.body)
-    console.log('response!!!!!', responseData)
     return res.status(200).send(responseData)
   })
 })

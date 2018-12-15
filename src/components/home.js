@@ -37,7 +37,7 @@ const styles = {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	fetchPosts: ({sub, limit}) => dispatch(fetchPosts({sub, limit})),
+	fetchPosts: ({ sub, limit }) => dispatch(fetchPosts({ sub, limit })),
 	fetchMe: () => dispatch(fetchMe())
 })
 

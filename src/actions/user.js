@@ -14,7 +14,7 @@ export const fetchMe = () => async (dispatch, getState) => {
     const userData = get(results, 'data')
     dispatch(addUserData({ data: userData }))
 
-    return axios.get('/api/me/subreddits', {
+    return await axios.get('/api/me/subreddits', {
       params: { token }
     })
   } catch (err) {

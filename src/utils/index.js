@@ -30,7 +30,7 @@ export const formatPosts = posts => {
 
 export const openRedditOAuth = () => {
   // const REDIRECT_URI = 'https://patrickhuang94.github.io/react-reddit/oauth'
-  const REDIRECT_URI = 'http://0f61b252.ngrok.io/oauth' // TODO: Use env variable
+  const REDIRECT_URI = 'http://32cb7562.ngrok.io/oauth' // TODO: Use env variable
   const url = `https://www.reddit.com/api/v1/authorize?client_id=${process.env.REACT_APP_REDDIT_CLIENT_ID}&response_type=code&state=random_string_here&redirect_uri=${REDIRECT_URI}&duration=permanent&scope=identity`
 
   // open reddit oauth page
