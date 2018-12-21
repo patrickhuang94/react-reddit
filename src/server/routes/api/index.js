@@ -4,19 +4,27 @@ const request = require('request')
 const router = express.Router()
 
 router.post('/api/auth', async function (req, res, next) {
-  const code = req.body.code
-  const data = {
-    code,
-    grant_type: 'authorization_code',
-    // redirect_uri: 'https://patrickhuang94.github.io/react-reddit/oauth'
-    redirect_uri: `${process.env.HOST_URL}/oauth`,
+  let formData = {}
+  if (req.body.refreshToken) {
+    formData = {
+      refresh_token: req.body.refreshToken,
+      grant_type: 'refresh_token',
+    }
+  } else {
+    const code = req.body.code
+    formData = {
+      code,
+      grant_type: 'authorization_code',
+      // redirect_uri: 'https://patrickhuang94.github.io/react-reddit/oauth'
+      redirect_uri: `${process.env.HOST_URL}/oauth`,
+    }
   }
 
   const uri = 'https://www.reddit.com/api/v1/access_token'
   // reddit expects x-www-form-urlencoded which is defaulted with 'auth', not 'headers'
   const tokenData = await request.post({
     uri,
-    form: data,
+    form: formData,
     auth: {
       user: process.env.REACT_APP_REDDIT_CLIENT_ID,
       password: process.env.REACT_APP_REDDIT_CLIENT_SECRET

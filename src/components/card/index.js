@@ -71,10 +71,12 @@ const styles = {
   }
 }
 
+const mapStateToProps = (state) => ({
+  user: state.user
+})
+
 class Card extends React.Component {
-
   renderScore (score) {
-
     if (isEmpty(this.props.user)) {
       return (
         <div style={styles.scoreContainer}>
@@ -86,14 +88,13 @@ class Card extends React.Component {
     return (
       <div style={styles.scoreContainer}>
         <div style={styles.arrow}><i className="fas fa-arrow-up"></i></div>
-          <div>{score}</div>
+        <div>{score}</div>
         <div style={styles.arrow}><i className="fas fa-arrow-down"></i></div>
       </div>
     )
   }
 
   render () {
-
     const {post, index} = this.props
     const thumbnail = get(post, 'thumbnail')
     const title = get(post, 'title')
@@ -124,13 +125,6 @@ class Card extends React.Component {
         </div>
       </div>
     )
-  }
-}
-
-function mapStateToProps (state) {
-
-  return {
-    user: state.user
   }
 }
 

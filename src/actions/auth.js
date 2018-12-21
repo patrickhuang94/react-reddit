@@ -8,6 +8,21 @@ export const addBearerToken = ({ bearerToken }) => ({
   payload: bearerToken
 })
 
+export const refreshBearerToken = () => async (dispatch) => {
+  const refreshToken = Cookies.get('refresh_token')
+  const refreshUrl = '/api/auth'
+  try {
+    const result = await axios({
+      method: 'POST',
+      url: refreshUrl,
+      data: { refreshToken }
+    })
+    return dispatch(addBearerToken({ bearerToken: result.data }))
+  } catch (err) {
+    console.error('could not refresh token', err)
+  }
+}
+
 export const getBearerToken = ({ code }) => async (dispatch) => {
   // after redirect, code is available in query params
   const fetchUrl = '/api/auth'
@@ -19,9 +34,14 @@ export const getBearerToken = ({ code }) => async (dispatch) => {
     })
 
     const bearerToken = get(result, 'data')
-    Cookies.set('bearerToken', bearerToken.access_token)
+    Cookies.set('expires_at', Date.now() + bearerToken.expires_in)    
+    Cookies.set('bearer_token', bearerToken.access_token)
+    Cookies.set('refresh_token', bearerToken.refresh_token) // refresh tokens never expire
     
-    return null ? bearerToken.error : dispatch(addBearerToken({ bearerToken }))
+    if (bearerToken.error) {
+      return null
+    }
+    return dispatch(addBearerToken({ bearerToken }))
   } catch (err) {
     console.error('Something went wrong during access token retrieval: ', err)
   }

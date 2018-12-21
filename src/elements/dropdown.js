@@ -21,18 +21,15 @@ const styles = {
 }
 
 class Dropdown extends React.Component {
-
   state = {
     isOpen: false
   }
 
   toggleList = () => {
-
     this.setState({isOpen: !this.state.isOpen})
   }
 
   render () {
-
     return (
       <div style={styles.dropdownContainer} onClick={this.toggleList}>
         <div>{this.props.title}</div>

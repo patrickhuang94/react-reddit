@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 
 import Button from '../elements/button'
 import { openRedditOAuth }  from '../utils'
-import { fetchMe, addBearerToken } from '../actions'
+import { fetchMe, addBearerToken, refreshBearerToken } from '../actions'
 
 const styles = {
 	headerContainer: {
@@ -25,7 +25,9 @@ const styles = {
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
-		marginRight: 10
+		marginRight: 10,
+		padding: '10px 20px',
+		border: '1px solid black',
 	},
 	username: {
 		fontSize: 16,
@@ -43,6 +45,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	addBearerToken: ({ bearerToken }) => dispatch(addBearerToken({ bearerToken })),
+	refreshBearerToken: () => dispatch(refreshBearerToken()),
 	fetchMe: () => dispatch(fetchMe())
 })
 
@@ -52,11 +55,16 @@ class Header extends React.Component {
 	}
 
 	async componentDidMount () {
-		if (Cookies.get('bearerToken')) {
-			await this.props.addBearerToken({ bearerToken: { access_token: Cookies.get('bearerToken') } })
-			await this.props.fetchMe()
-			this.setState({ isLoaded: true })
+		if (Cookies.get('bearer_token')) {
+			if (Date.now() + 3600 > Cookies.get('expires_in')) {
+				this.props.refreshBearerToken()
+			} else {
+				await this.props.addBearerToken({ bearerToken: { access_token: Cookies.get('bearer_token') } })
+				await this.props.fetchMe()
+			}
 		}
+		
+		this.setState({ isLoaded: true })
 	}
 
 	renderLogin () {
