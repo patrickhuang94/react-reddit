@@ -19,7 +19,8 @@ export const refreshBearerToken = () => async (dispatch) => {
     })
 
     const bearerToken = get(result, 'data')
-    Cookies.set('expires_at', Date.now() + bearerToken.expires_in)    
+    const expiresInMs = bearerToken.expires_in * 1000
+    Cookies.set('expires_at', Date.now() + expiresInMs)    
     Cookies.set('bearer_token', bearerToken.access_token)
 
     return dispatch(addBearerToken({ bearerToken }))
@@ -39,7 +40,8 @@ export const getBearerToken = ({ code }) => async (dispatch) => {
     })
 
     const bearerToken = get(result, 'data')
-    Cookies.set('expires_at', Date.now() + bearerToken.expires_in)    
+    const expiresInMs = bearerToken.expires_in * 1000
+    Cookies.set('expires_at', Date.now() + expiresInMs)    
     Cookies.set('bearer_token', bearerToken.access_token)
     Cookies.set('refresh_token', bearerToken.refresh_token)
     return dispatch(addBearerToken({ bearerToken }))

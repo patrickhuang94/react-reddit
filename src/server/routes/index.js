@@ -9,7 +9,6 @@ router.post('/api/auth', async function (req, res) {
       refreshToken: req.body.refreshToken,
       code: req.body.code
     })
-    console.log('route response', response)
     return res.status(200).send(response)
   } catch (err) {
     return res.status(500).send({
