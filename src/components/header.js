@@ -56,14 +56,18 @@ class Header extends React.Component {
 
 	async componentDidMount () {
 		if (Cookies.get('bearer_token')) {
-			if (Date.now() + 3600 > Cookies.get('expires_in')) {
+			const currentDateInSeconds = Math.floor(Date.now() / 1000)
+			if (currentDateInSeconds > Cookies.get('expires_at')) {
 				this.props.refreshBearerToken()
 			} else {
-				await this.props.addBearerToken({ bearerToken: { access_token: Cookies.get('bearer_token') } })
+				await this.props.addBearerToken({
+					bearerToken: {
+						access_token: Cookies.get('bearer_token')
+					}
+				})
 				await this.props.fetchMe()
 			}
 		}
-		
 		this.setState({ isLoaded: true })
 	}
 
