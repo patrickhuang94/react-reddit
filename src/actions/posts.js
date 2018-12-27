@@ -1,30 +1,23 @@
 import axios from 'axios'
+import { startLoading, stopLoading } from './ui'
 import { ADD_POSTS } from './actionTypes'
 import { formatPosts } from '../utils'
 
-export const fetchPosts = ({sub, limit}) => async (dispatch) => {
-  const options = {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-    },
-    cors: true,
-    credentials: 'same-origin'
-  }
-
+export const fetchPosts = ({ sub, limit }) => async (dispatch) => {
+  dispatch(startLoading())
   const fetchUrl = `https://www.reddit.com/r/${sub}.json`
-
   try {
     const fetchedPosts = await axios.get(fetchUrl)
     const formattedPosts = formatPosts(fetchedPosts)
     dispatch(addPosts(formattedPosts))
+    dispatch(stopLoading())
   } catch (err) {
+    dispatch(stopLoading())
     console.log('error while fetching posts: ', err)
   }
 }
 
-export const addPosts = ({posts}) => ({
+export const addPosts = ({ posts }) => ({
   type: ADD_POSTS,
   payload: posts
 })
