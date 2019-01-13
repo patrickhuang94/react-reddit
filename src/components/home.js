@@ -44,30 +44,30 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
 	posts: state.posts.data,
 	authentication: state.authentication,
-	user: state.user
+	user: state.user,
+	loading: state.ui.loading
 })
 
 class Home extends React.Component {
 	componentDidMount () {
-		this.fetchPosts('all')
+		this.props.fetchPosts({
+			sub: 'popular'
+			// limit: 10
+		})
 
 		if (!isEmpty(this.props.authentication)) {
 			this.props.fetchMe()
 		}
 	}
 
-	fetchPosts (subreddit) {
-		this.props.fetchPosts({
-			sub: subreddit,
-			limit: 10
-		})
-	}
-
 	renderPosts () {
 		return (
 			<div style={styles.container}>
 				<div style={styles.postsContainer}>
-					{this.props.posts.map((post, index) => <Card post={post} index={index} />)}
+					{
+						this.props.posts.map((post, index) =>
+						<Card post={post} index={index} />)
+					}
 				</div>
 			</div>
 		)

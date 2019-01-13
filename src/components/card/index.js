@@ -26,6 +26,10 @@ const styles = {
     fontSize: 16,
     color: colors.darkGray
   },
+  thumbnailContainer: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
   contentContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -68,6 +72,11 @@ const styles = {
       color: 'white',
       cursor: 'pointer'
     }
+  },
+  nsfw: {
+    color: 'red',
+    border: '1px solid red',
+    textAlign: 'center'
   }
 }
 
@@ -94,30 +103,51 @@ class Card extends React.Component {
     )
   }
 
+  renderThumbnail () {
+    const { post } = this.props
+    let thumbnail = post.thumbnail
+    if (post.thumbnail === 'self' || post.thumbnail === 'default') {
+      thumbnail = require('../../images/text-icon.png')
+    }
+    if (post.thumbnail === 'nsfw' || post.thumbnail === 'image') {
+      thumbnail = require('../../images/reddit-icon.png')
+    }
+
+    return (
+      <div style={styles.thumbnailContainer}>
+        <img src={thumbnail} style={styles.thumbnail} />
+        {post.thumbnail === 'nsfw' && <div style={styles.nsfw}>nsfw</div>}
+      </div>
+    )
+  }
+
+  renderTimestamp () {
+    const { post } = this.props
+    const timeNowInMs = Math.floor(Date.now() / 1000)
+    const postedTime = post.created_utc
+    const displayTimeInHours = Math.floor((timeNowInMs - postedTime) / 60 / 60)
+    return (
+      <div>
+        posted {displayTimeInHours} hours ago
+        <span style={styles.username}> u/{post.author}</span>
+      </div>
+    )
+  }
+
   render () {
-    const {post, index} = this.props
-    const thumbnail = get(post, 'thumbnail')
+    const { post, index } = this.props
     const title = get(post, 'title')
     const score = digitsRounder(get(post, 'score'))
-    const createdAt = get(post, 'created')
-    const dateNow = Math.floor(Date.now() / 1000)
-    const time = createdAt - dateNow
-    const author = get(post, 'author')
     const subreddit = get(post, 'subreddit')
-    // const start = moment(createdAt,'HH:mm:ss')
-    // const minutesPassed = moment().diff(start, 'minutes')
 
     return (
       <div style={styles.cardContainer} key={index}>
         {this.renderScore(score)}
-        <img src={thumbnail} style={styles.thumbnail} />
+        {this.renderThumbnail()}
         <div style={styles.contentContainer}>
           <div>
             <div style={styles.titleText}>{title}</div>
-            <div>
-              posted 3 hours ago by
-              <span style={styles.username}> u/{author}</span>
-            </div>
+            {this.renderTimestamp()}
           </div>
           <div style={styles.subreddit}>
             r/{subreddit}
