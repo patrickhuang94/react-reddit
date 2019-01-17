@@ -6,6 +6,7 @@ export const SHOW_MODAL = 'SHOW_MODAL'
 export const HIDE_MODAL = 'HIDE_MODAL'
 export const START_LOADING = 'START_LOADING'
 export const STOP_LOADING = 'STOP_LOADING'
+export const CURRENT_SUBREDDIT = 'CURRENT_SUBREDDIT'
 
 // authentication
 export const ADD_BEARER_TOKEN = 'ADD_BEARER_TOKEN'

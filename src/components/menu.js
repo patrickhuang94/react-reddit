@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 
 import colors from '../colors'
+import { updateCurrentSubreddit } from '../actions'
 
 const styles = {
   leftMenu: {
@@ -54,8 +55,14 @@ const mapStateToProps = (state) => ({
   user: state.user
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  updateCurrentSubreddit: ({ subreddit }) => dispatch(updateCurrentSubreddit({ subreddit }))
+})
+
+
 class Menu extends React.Component {
   handleMenuSelect = (route) => {
+    this.props.updateCurrentSubreddit({ subreddit: route })
     this.props.history.push(route)
   }
 
@@ -78,7 +85,7 @@ class Menu extends React.Component {
           <span style={styles.icon}><i className="fas fa-heart"></i></span>
           Popular
         </div>
-        <div style={styles.menuOption} key="all">
+        <div style={styles.menuOption} key="all" onClick={() => this.handleMenuSelect('all')}>
           <span style={styles.icon}><i className="fas fa-rocket"></i></span>
           All
         </div>
@@ -104,4 +111,4 @@ class Menu extends React.Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, null)(Radium(Menu)))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Radium(Menu)))

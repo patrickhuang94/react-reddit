@@ -2,19 +2,21 @@ import {
   SHOW_MODAL,
   HIDE_MODAL,
   START_LOADING,
-  STOP_LOADING
+  STOP_LOADING,
+  CURRENT_SUBREDDIT
 } from '../actions/actionTypes'
 
 const initialState = {
   loading: null,
-  modalType: null
+  modalType: null,
+  currentSubreddit: 'popular'
 }
 
 function ui (state = initialState, action) {
   switch (action.type) {
     case SHOW_MODAL:
       return {
-        modalType: action.modalType
+        modalType: action.payload
       }
 
     case HIDE_MODAL:
@@ -30,6 +32,12 @@ function ui (state = initialState, action) {
       return {
         ...state,
         loading: false
+      }
+
+    case CURRENT_SUBREDDIT:
+      return {
+        ...state,
+        currentSubreddit: action.payload
       }
 
     default:

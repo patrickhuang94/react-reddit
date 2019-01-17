@@ -11,15 +11,15 @@ const styles = {
     backgroundColor: 'white',
     paddingTop: 20,
     paddingBottom: 20,
-    marginBottom: '15px'
+    marginBottom: 15
   },
   scoreContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '10px',
-    minWidth: '50px',
+    padding: 10,
+    minWidth: 50,
     fontSize: 16,
     color: colors.darkGray
   },
@@ -41,7 +41,7 @@ const styles = {
   },
   titleText: {
     color: colors.darkBlue,
-    fontWeight: '600',
+    fontWeight: 600,
     fontSize: 18,
     marginBottom: 8
   },
@@ -49,16 +49,18 @@ const styles = {
     width: 100,
     height: 100
   },
-  subreddit: {
-    marginLeft: 4,
-    color: colors.redditOrange
-  },
   postedBy: {
-    fontSize: 12,
+    fontSize: 13,
     color: colors.darkGray,
     marginBottom: 5
   },
   username: {
+    fontSize: 13,
+    marginLeft: 4,
+    color: colors.redditOrange
+  },
+  subreddit: {
+    fontSize: 13,
     marginLeft: 4,
     color: colors.redditOrange
   },

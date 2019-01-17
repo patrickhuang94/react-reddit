@@ -19,20 +19,15 @@ const styles = {
 		width: '100%',
 		padding: '0px 15px'
 	},
-	topicsContainer: {
-		backgroundColor: colors.gray,
-		minHeight: '70px',
-		width: '100%',
-		display: 'flex',
-		alignItems: 'center'
-	},
-	topic: {
-		marginRight: 20,
-		color: colors.darkGray
-	},
 	postsContainer: {
 		display: 'flex',
 		flexDirection: 'column'
+	},
+	homepage: {
+		fontSize: 22,
+		color: colors.darkGray,
+		marginBottom: 20,
+		marginTop: 20
 	}
 }
 
@@ -45,18 +40,22 @@ const mapStateToProps = (state) => ({
 	posts: state.posts.data,
 	authentication: state.authentication,
 	user: state.user,
-	loading: state.ui.loading
+	loading: state.ui.loading,
+	subreddit: state.ui.currentSubreddit
 })
 
 class Home extends React.Component {
 	componentDidMount () {
-		this.props.fetchPosts({
-			sub: 'popular'
-			// limit: 10
-		})
+		this.props.fetchPosts({ sub: this.props.subreddit })
 
 		if (!isEmpty(this.props.authentication)) {
 			this.props.fetchMe()
+		}
+	}
+
+	componentDidUpdate (prevProps) {
+		if (prevProps.subreddit !== this.props.subreddit) {
+			this.props.fetchPosts({ sub: this.props.subreddit })
 		}
 	}
 
@@ -76,16 +75,7 @@ class Home extends React.Component {
 	render () {
 		return (
 			<div style={styles.homeContainer}>
-				<div style={styles.topicsContainer}>
-					<div style={styles.topic}>Popular</div>
-					<div style={styles.topic}>New</div>
-					<div style={styles.topic}>Rising</div>
-					<div style={styles.topic}>Controversial</div>
-					<div style={styles.topic}>Top</div>
-					<div style={styles.topic}>Gilded</div>
-					<div style={styles.topic}>Wiki</div>
-				</div>
-
+				<div style={styles.homepage}>Homepage</div>
 				{!isEmpty(this.props.posts) && this.renderPosts()}
 			</div>
 		)
