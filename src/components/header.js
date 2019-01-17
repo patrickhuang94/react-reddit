@@ -1,11 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { isEmpty, get } from 'lodash'
-import Cookies from 'js-cookie'
+import colors from '../colors'
 
 import Button from '../elements/button'
 import { openRedditOAuth }  from '../utils'
-import { fetchMe, addBearerToken, refreshBearerToken } from '../actions'
+import { 
+	fetchMe,
+	persistToken
+} from '../actions'
 
 const styles = {
 	headerContainer: {
@@ -13,29 +16,28 @@ const styles = {
 		justifyContent: 'space-between',
 		backgroundColor: 'white',
 		margin: '10px 10px',
-		height: 60,
+		height: 40
 	},
 	redditHeader: {
     fontSize: 24,
-    color: 'black',
+    color: colors.darkestGray,
 		display: 'flex',
     alignItems: 'center'
   },
-	userContainer: {
+	usernameContainer: {
 		display: 'flex',
-		flexDirection: 'column',
+		alignItems: 'center',
 		justifyContent: 'center',
-		marginRight: 10,
-		padding: '10px 20px',
-		border: '1px solid black',
+		marginRight: 10
 	},
 	username: {
+		color: colors.darkestGray,
 		fontSize: 16,
-		fontWeight: 700
+		marginRight: 5
 	},
 	karma: {
-		fontSize: 16,
-		marginTop: 5
+		color: colors.purple,
+		fontSize: 16
 	}
 }
 
@@ -44,8 +46,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	addBearerToken: ({ bearerToken }) => dispatch(addBearerToken({ bearerToken })),
-	refreshBearerToken: () => dispatch(refreshBearerToken()),
+	persistToken: () => dispatch(persistToken()),
 	fetchMe: () => dispatch(fetchMe())
 })
 
@@ -54,19 +55,9 @@ class Header extends React.Component {
 		isLoaded: false
 	}
 
-	async componentDidMount () {
-		if (Cookies.get('bearer_token')) {
-			if (Date.now() > Cookies.get('expires_at')) {
-				this.props.refreshBearerToken()
-			} else {
-				await this.props.addBearerToken({
-					bearerToken: {
-						access_token: Cookies.get('bearer_token')
-					}
-				})
-				await this.props.fetchMe()
-			}
-		}
+	componentDidMount () {
+		this.props.persistToken()
+		this.props.fetchMe()
 		this.setState({ isLoaded: true })
 	}
 
@@ -88,9 +79,10 @@ class Header extends React.Component {
 		const totalKarma = linkKarma + commentKarma
 
 		return (
-			<div style={styles.userContainer}>
-				<div style={styles.username}>{username}</div>
-				<div style={styles.karma}>{totalKarma} karma</div>
+			<div style={styles.usernameContainer}>
+				<div style={styles.username}>{username}
+				</div>
+				<div style={styles.karma}>({totalKarma})</div>
 			</div>
 		)
 	}
@@ -99,7 +91,7 @@ class Header extends React.Component {
 		return (
 			<div style={styles.headerContainer}>
 				<div style={styles.redditHeader}>reddit</div>
-				{!this.state.isLoaded ? null : this.renderLogin()}
+				{this.renderLogin()}
 			</div>
 		)
 	}

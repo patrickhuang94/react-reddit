@@ -50,14 +50,16 @@ const styles = {
   }
 }
 
-class Menu extends React.Component {
+const mapStateToProps = (state) => ({
+  user: state.user
+})
 
+class Menu extends React.Component {
   handleMenuSelect = (route) => {
     this.props.history.push(route)
   }
 
   renderMySubreddits() {
-
     return (
       <div style={styles.mySubreddits}>
         <p style={styles.mySubredditsTitle}>My Subreddits</p>
@@ -66,7 +68,6 @@ class Menu extends React.Component {
   }
 
   renderMenuOptions () {
-
     return (
       <div style={styles.menuOptions}>
         <div style={styles.menuOption} key="home">
@@ -92,7 +93,6 @@ class Menu extends React.Component {
   }
 
   render () {
-
     return (
       <div style={styles.leftMenu}>
         <div style={styles.searchBarContainer}>
@@ -103,9 +103,5 @@ class Menu extends React.Component {
     )
   }
 }
-
-const mapStateToProps = (state) => ({
-  user: state.user
-})
 
 export default withRouter(connect(mapStateToProps, null)(Radium(Menu)))
