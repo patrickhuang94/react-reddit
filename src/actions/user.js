@@ -7,15 +7,14 @@ export const fetchMe = () => async (dispatch, getState) => {
   const token = state.authentication.access_token
 
   try {
-    const results = await axios.get('/api/me', {
+    const results = await axios.get('/api/user', {
       params: { token }
     })
-
     const userData = get(results, 'data')
-    dispatch(addUserData({ data: userData }))
-    return await axios.get('/api/me/subreddits', {
-      params: { token }
-    })
+    return dispatch(addUserData({ data: userData }))
+    // return await axios.get('/api/user/subreddits', {
+    //   params: { token }
+    // })
   } catch (err) {
     console.error('error fetching user data')
   }
