@@ -28,7 +28,9 @@ const styles = {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginRight: 10
+		marginRight: 10,
+		border: `1px solid ${colors.darkestGray}`,
+		padding: '0px 10px'
 	},
 	username: {
 		color: colors.darkestGray,

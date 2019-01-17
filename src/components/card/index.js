@@ -1,9 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
 import { get, isEmpty } from 'lodash'
-// import moment from 'moment'
-// import TimeAgo from 'react-timeago'
 
 import colors from '../../colors'
 import { digitsRounder } from '../../utils'
@@ -38,12 +35,9 @@ const styles = {
     marginLeft: 15,
     marginRight: 10
   },
-  titleContainer: {
+  titleAuthorContainer: {
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    width: '100%',
-    padding: '15px'
+    flexDirection: 'column'
   },
   titleText: {
     color: colors.darkBlue,
@@ -52,15 +46,21 @@ const styles = {
     marginBottom: 8
   },
   thumbnail: {
-    width: '100px',
-    height: '100px'
+    width: 100,
+    height: 100
   },
   subreddit: {
-    border: `1px solid ${colors.darkGray}`,
-    padding: '5px 8px'
+    marginLeft: 4,
+    color: colors.redditOrange
+  },
+  postedBy: {
+    fontSize: 12,
+    color: colors.darkGray,
+    marginBottom: 5
   },
   username: {
-    color: colors.blue
+    marginLeft: 4,
+    color: colors.redditOrange
   },
   arrow: {
     paddingTop: 10,
@@ -74,9 +74,21 @@ const styles = {
     }
   },
   nsfw: {
-    color: 'red',
-    border: '1px solid red',
+    color: colors.red,
+    border: `1px solid ${colors.red}`,
     textAlign: 'center'
+  },
+  commentsContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  commentsCount: {
+    color: colors.redditOrange,
+    border: `1px solid ${colors.redditOrange}`,
+    borderRadius: 5,
+    marginRight: 10,
+    padding: 5,
+    fontSize: 13
   }
 }
 
@@ -89,7 +101,7 @@ class Card extends React.Component {
     if (isEmpty(this.props.user)) {
       return (
         <div style={styles.scoreContainer}>
-          <div>{score}</div>
+          {score}
         </div>
       )
     }
@@ -97,7 +109,7 @@ class Card extends React.Component {
     return (
       <div style={styles.scoreContainer}>
         <div style={styles.arrow}><i className="fas fa-arrow-up"></i></div>
-        <div>{score}</div>
+        {score}
         <div style={styles.arrow}><i className="fas fa-arrow-down"></i></div>
       </div>
     )
@@ -121,15 +133,29 @@ class Card extends React.Component {
     )
   }
 
-  renderTimestamp () {
+  renderPostedBy () {
     const { post } = this.props
     const timeNowInMs = Math.floor(Date.now() / 1000)
     const postedTime = post.created_utc
     const displayTimeInHours = Math.floor((timeNowInMs - postedTime) / 60 / 60)
+    const subreddit = get(post, 'subreddit')
+
     return (
-      <div>
-        posted {displayTimeInHours} hours ago
-        <span style={styles.username}> u/{post.author}</span>
+      <div style={styles.postedBy}>
+        posted {displayTimeInHours} hours ago by
+        <span style={styles.username}>{post.author}</span> to
+        <span style={styles.subreddit}>{`r/${subreddit}`}</span>
+      </div>
+    )
+  }
+
+  renderCommentsCount () {
+    const { post } = this.props
+    const count = digitsRounder(get(post, 'num_comments'))
+
+    return (
+      <div style={styles.commentsCount}>
+        {count} comments
       </div>
     )
   }
@@ -138,20 +164,17 @@ class Card extends React.Component {
     const { post, index } = this.props
     const title = get(post, 'title')
     const score = digitsRounder(get(post, 'score'))
-    const subreddit = get(post, 'subreddit')
 
     return (
       <div style={styles.cardContainer} key={index}>
         {this.renderScore(score)}
         {this.renderThumbnail()}
         <div style={styles.contentContainer}>
-          <div>
+          <div style={styles.titleAuthorContainer}>
             <div style={styles.titleText}>{title}</div>
-            {this.renderTimestamp()}
+            {this.renderPostedBy()}
           </div>
-          <div style={styles.subreddit}>
-            r/{subreddit}
-          </div>
+          {this.renderCommentsCount()}
         </div>
       </div>
     )
