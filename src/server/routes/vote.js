@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const authService = require('../services/authService')
+const voteService = require('../services/voteService')
 
 router.post('/', async function (req, res) {
   try {
-    const response = await authService.getAuthToken({
-      refreshToken: req.body.refreshToken,
-      code: req.body.code
+    const response = await voteService.vote({
+      fullNameId: req.body.fullNameId,
+      direction: req.body.direction,
+      token: req.query.token
     })
     return res.status(200).send(response)
   } catch (err) {
