@@ -40,9 +40,7 @@ function containerStyles ({color = colors.darkestGray, disabled, size, type}) {
 }
 
 class Button extends React.Component {
-
   render () {
-
     return (
       <div
         style={{...containerStyles(this.props), ...this.props.style}}

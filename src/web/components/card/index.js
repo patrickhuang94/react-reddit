@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { get, isEmpty } from 'lodash'
 
+import { votePost } from '../../actions/vote'
 import colors from '../../colors'
 import { digitsRounder } from '../../utils'
 
@@ -98,7 +99,25 @@ const mapStateToProps = (state) => ({
   user: state.user
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  votePost: ({ fullNameId, direction }) => dispatch(votePost({ fullNameId, direction }))
+})
+
 class Card extends React.Component {
+  handleDownvote = () => {
+    this.props.votePost({
+      fullNameId: this.props.post.name,
+      direction: '-1'
+    })
+  }
+
+  handleUpvote = () => {
+    this.props.votePost({
+      fullNameId: this.props.post.name,
+      direction: '1'
+    })
+  }
+
   renderScore (score) {
     if (isEmpty(this.props.user)) {
       return (
@@ -110,9 +129,13 @@ class Card extends React.Component {
 
     return (
       <div style={styles.scoreContainer}>
-        <div style={styles.arrow}><i className="fas fa-arrow-up"></i></div>
+        <div style={styles.arrow} onClick={this.handleUpvote}>
+          <i className="fas fa-arrow-up" />
+        </div>
         {score}
-        <div style={styles.arrow}><i className="fas fa-arrow-down"></i></div>
+        <div style={styles.arrow} onClick={this.handleDownvote}>
+          <i className="fas fa-arrow-down" />
+        </div>
       </div>
     )
   }
@@ -183,4 +206,4 @@ class Card extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, null)(Card)
+export default connect(mapStateToProps, mapDispatchToProps)(Card)
