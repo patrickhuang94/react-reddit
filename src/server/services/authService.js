@@ -1,7 +1,7 @@
 const axios = require('axios')
 const querystring = require('querystring')
 
-async function getAuthToken ({refreshToken, code}) {
+async function getAuthToken ({ refreshToken, code }) {
   let data
   if (refreshToken) {
     data = {

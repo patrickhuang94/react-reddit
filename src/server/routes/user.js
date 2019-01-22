@@ -32,7 +32,7 @@ router.get('/', async function (req, res) {
 router.get('/subreddits', async function (req, res) {
   const uri = 'https://oauth.reddit.com/subreddits/mine/subscriber'
   const token = req.query.token
-  const auth = {'bearer': token}
+  const auth = {'Bearer': token}
   // gives back 403 without this headers set
   const headers = {'User-Agent': 'client'}
   const subreddits = await request.get({
