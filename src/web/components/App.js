@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Header from './header'
-import Menu from './menu'
+import Sidebar from './sidebar'
 import Home from './home'
 
 import '../App.css'
@@ -9,20 +9,21 @@ import '../App.css'
 const styles = {
 	mainContainer: {
 		display: 'flex',
-		flexDirection:' column',
-		height: '100%'
+		height: '100%',
+		overflow: 'hidden'
 	},
-	page: {
-		display: 'flex'
+	content: {
+		display: 'flex',
+		flexDirection: 'column'
 	}
 }
 
 const App = () => {
 	return (
 		<div style={styles.mainContainer}>
-			<Header />
-			<div style={styles.page}>
-				<Menu />
+			<Sidebar />
+			<div style={styles.content}>
+				<Header />
 				<Home />
 			</div>
 		</div>

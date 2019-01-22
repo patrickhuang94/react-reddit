@@ -9,7 +9,9 @@ import { isEmpty } from 'lodash'
 
 const styles = {
 	container: {
-		height: '100%'
+		marginLeft: '250px',
+		height: '100%',
+		overflowY: 'auto'
 	},
 	homeContainer: {
 		display: 'flex',

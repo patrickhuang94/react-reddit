@@ -1,15 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { isEmpty, get } from 'lodash'
 import colors from '../colors'
-
-import Button from '../elements/button'
-import { openRedditOAuth }  from '../utils'
-import { 
-	fetchMe,
-	persistToken,
-	fetchUpvoted
-} from '../actions'
 
 const styles = {
 	headerContainer: {
@@ -49,54 +40,14 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	persistToken: () => dispatch(persistToken()),
-	fetchMe: () => dispatch(fetchMe()),
-	fetchUpvoted: () => dispatch(fetchUpvoted())
+
 })
 
 class Header extends React.Component {
-	state = {
-		isLoaded: false
-	}
-
-	componentDidMount () {
-		this.props.persistToken()
-		this.props.fetchMe()
-		this.props.fetchUpvoted() // TODO: this is the wrong place to do it
-		this.setState({ isLoaded: true })
-	}
-
-	renderLogin () {
-		if (isEmpty(this.props.user)) {
-			return (
-				<Button
-					uppercase
-					title="login with reddit"
-					size="small"
-					onClick={openRedditOAuth}
-				/>
-			)
-		}
-
-		const username = get(this.props.user, 'data.name',)
-		const linkKarma = get(this.props.user, 'data.link_karma')
-		const commentKarma = get(this.props.user, 'data.comment_karma')
-		const totalKarma = linkKarma + commentKarma
-
-		return (
-			<div style={styles.usernameContainer}>
-				<div style={styles.username}>{username}
-				</div>
-				<div style={styles.karma}>({totalKarma})</div>
-			</div>
-		)
-	}
-
 	render () {
 		return (
 			<div style={styles.headerContainer}>
 				<div style={styles.redditHeader}>reddit</div>
-				{this.renderLogin()}
 			</div>
 		)
 	}

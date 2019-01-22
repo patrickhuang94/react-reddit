@@ -7,22 +7,25 @@ import { isEmpty } from 'lodash'
 
 import colors from '../colors'
 import { updateCurrentSubreddit } from '../actions'
+import Avatar from './avatar'
+
+import { fetchMe, persistToken } from '../actions'
 
 const styles = {
   leftMenu: {
-		minWidth: '200px',
+    position: 'fixed',
+    minWidth: '250px',
+    height: '100%',
 		display: 'flex',
-		flexDirection: 'column',
-		backgroundColor: colors.darkestGray
+    flexDirection: 'column',
+		backgroundColor: colors.darkerGray
   },
-  searchBarContainer: {
-    height: '70px',
-    backgroundColor: colors.darkGray
+  userContainer: {
+    backgroundColor: colors.darkestGray,
+    height: '70px'
   },
-  searchBar: {
-    margin: '20px 15px 15px 10px',
-    fontSize: 24,
-    color: 'white'
+  user: {
+    margin: 20
   },
   menuOptions: {
     margin: 15
@@ -48,6 +51,11 @@ const styles = {
   mySubredditsTitle: {
     fontSize: 18,
     color: 'white'
+  },
+  footer: {
+    display: 'flex',
+    margin: 15,
+    color: 'white'
   }
 }
 
@@ -56,11 +64,17 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updateCurrentSubreddit: ({ subreddit }) => dispatch(updateCurrentSubreddit({ subreddit }))
+  updateCurrentSubreddit: ({ subreddit }) => dispatch(updateCurrentSubreddit({ subreddit })),
+  persistToken: () => dispatch(persistToken()),
+	fetchMe: () => dispatch(fetchMe())
 })
 
+class Sidebar extends React.Component {
+  componentDidMount () {
+    this.props.persistToken()
+    this.props.fetchMe()
+  }
 
-class Menu extends React.Component {
   handleMenuSelect = (route) => {
     this.props.updateCurrentSubreddit({ subreddit: route })
     this.props.history.push(route)
@@ -70,6 +84,16 @@ class Menu extends React.Component {
     return (
       <div style={styles.mySubreddits}>
         <p style={styles.mySubredditsTitle}>My Subreddits</p>
+      </div>
+    )
+  }
+
+  renderUser () {
+    return (
+      <div style={styles.userContainer}>
+        <div style={styles.user}>
+          <Avatar user={this.props.user} />
+        </div>
       </div>
     )
   }
@@ -99,16 +123,25 @@ class Menu extends React.Component {
     )
   }
 
+  renderFooter () {
+    return (
+      <div style={styles.footer}>
+        <div>github</div>
+        <div style={{marginLeft: 5, marginRight: 5}}>|</div>
+        <div>about</div>
+      </div>
+    )
+  }
+
   render () {
     return (
       <div style={styles.leftMenu}>
-        <div style={styles.searchBarContainer}>
-          <p style={styles.searchBar}>search bar</p>
-        </div>
+        {this.renderUser()}
         {this.renderMenuOptions()}
+        {/* {this.renderFooter()} */}
       </div>
     )
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Radium(Menu)))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Radium(Sidebar)))
