@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 import { fetchPosts, fetchMe } from '../actions'
 import Card from './card'
-// import Dropdown from '../elements/dropdown'
 import colors from '../colors'
 
 import { isEmpty } from 'lodash'
@@ -47,8 +46,8 @@ const mapStateToProps = (state) => ({
 class Home extends React.Component {
 	componentDidMount () {
 		this.props.fetchPosts({ sub: this.props.subreddit })
-
 		if (!isEmpty(this.props.authentication)) {
+			// TODO: This if statement never gets executed
 			this.props.fetchMe()
 		}
 	}

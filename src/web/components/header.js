@@ -7,7 +7,8 @@ import Button from '../elements/button'
 import { openRedditOAuth }  from '../utils'
 import { 
 	fetchMe,
-	persistToken
+	persistToken,
+	fetchUpvoted
 } from '../actions'
 
 const styles = {
@@ -49,7 +50,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	persistToken: () => dispatch(persistToken()),
-	fetchMe: () => dispatch(fetchMe())
+	fetchMe: () => dispatch(fetchMe()),
+	fetchUpvoted: () => dispatch(fetchUpvoted())
 })
 
 class Header extends React.Component {
@@ -60,6 +62,7 @@ class Header extends React.Component {
 	componentDidMount () {
 		this.props.persistToken()
 		this.props.fetchMe()
+		this.props.fetchUpvoted() // TODO: this is the wrong place to do it
 		this.setState({ isLoaded: true })
 	}
 

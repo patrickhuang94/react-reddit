@@ -13,7 +13,6 @@ export const fetchPosts = ({ sub, limit }) => async (dispatch) => {
     dispatch(stopLoading())
   } catch (err) {
     dispatch(stopLoading())
-    console.log('error while fetching posts: ', err)
   }
 }
 

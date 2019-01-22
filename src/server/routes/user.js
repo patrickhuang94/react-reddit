@@ -1,58 +1,55 @@
 const express = require('express')
 const router = express.Router()
-const request = require('request')
+const userService = require('../services/userService')
 
-// all the methods below are authorized requests
 router.get('/', async function (req, res) {
-  const uri = 'https://oauth.reddit.com/api/v1/me'
-  const token = req.query.token
-  const auth = {'bearer': token}
-  // gives back 403 without this headers set
-  const headers = {'User-Agent': 'client'}
-  const data = await request.get({
-    uri,
-    auth,
-    headers
-  }, (err, response) => {
-    if (err) {
-      console.log('ERROR: ', err)
-      return
-    }
-
-    if (response.statusCode !== 200) {
-      console.log('/me failed: ', response)
-      return
-    }
-
-    const responseData = JSON.parse(response.body)
-    return res.status(200).send(responseData)
-  })
+  try {
+    const response = await userService.getUser({
+      token: req.query.token
+    })
+    return res.status(200).send(response)
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message,
+      error: {
+        status: 500
+      }
+    })
+  }
 })
 
+// DON'T WORK
 router.get('/subreddits', async function (req, res) {
-  const uri = 'https://oauth.reddit.com/subreddits/mine/subscriber'
-  const token = req.query.token
-  const auth = {'Bearer': token}
-  // gives back 403 without this headers set
-  const headers = {'User-Agent': 'client'}
-  const subreddits = await request.get({
-    uri,
-    auth,
-    headers
-  }, (err, response) => {
-    if (err) {
-      console.log('ERROR: ', err)
-      return
-    }
+  try {
+    const response = await userService.getUserSubreddits({
+      token: req.query.token
+    })
+    return res.status(200).send(response)
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message,
+      error: {
+        status: 500
+      }
+    })
+  }
+})
 
-    if (response.statusCode !== 200) {
-      console.log('/subreddits failed: ', response)
-      return
-    }
-    console.log({response})
-    const responseData = JSON.parse(response.body)
-    return res.status(200).send(responseData)
-  })
+router.get('/upvoted', async function (req, res) {
+  try {
+    const response = await userService.getUpvoted({
+      token: req.query.token,
+      username: req.query.username
+    })
+    return res.status(200).send(response)
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message,
+      error: {
+        status: 500
+      }
+    })
+  }
 })
 
 module.exports = router

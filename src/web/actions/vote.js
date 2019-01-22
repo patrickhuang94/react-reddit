@@ -17,9 +17,8 @@ export const votePost = ({ fullNameId, direction }) => async (dispatch, getState
         token
       }
     }
-    
-    const results = await axios(request)
-    return results
+
+    return await axios(request)
   } catch (err) {
     throw err
   }
