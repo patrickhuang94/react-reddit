@@ -8,21 +8,18 @@ import colors from '../colors'
 import { isEmpty } from 'lodash'
 
 const styles = {
-	container: {
-		marginLeft: '250px',
-		height: '100%',
-		overflowY: 'auto'
-	},
 	homeContainer: {
 		display: 'flex',
 		flexDirection: 'column',
-		backgroundColor: colors.gray,
-		width: '100%',
+		marginLeft: 250,
+		backgroundColor: colors.lightestGray,
 		padding: '0px 15px'
 	},
 	postsContainer: {
 		display: 'flex',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		height: '100%',
+		overflowY: 'auto'
 	},
 	homepage: {
 		fontSize: 22,
@@ -62,13 +59,11 @@ class Home extends React.Component {
 
 	renderPosts () {
 		return (
-			<div style={styles.container}>
-				<div style={styles.postsContainer}>
-					{
-						this.props.posts.map((post, index) =>
-						<Card post={post} index={index} />)
-					}
-				</div>
+			<div style={styles.postsContainer}>
+				{
+					this.props.posts.map((post, index) =>
+					<Card post={post} index={index} />)
+				}
 			</div>
 		)
 	}

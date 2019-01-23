@@ -14,21 +14,40 @@ import { fetchMe, persistToken } from '../actions'
 const styles = {
   leftMenu: {
     position: 'fixed',
-    minWidth: '250px',
+    minWidth: 250,
     height: '100%',
 		display: 'flex',
     flexDirection: 'column',
-		backgroundColor: colors.darkerGray
+		backgroundColor: colors.darkestGray
   },
   userContainer: {
-    backgroundColor: colors.darkestGray,
-    height: '70px'
+    backgroundColor: colors.black,
+    height: 70
   },
   user: {
     margin: 20
   },
   menuOptions: {
-    margin: 15
+    marginTop: 10,
+    marginLeft: 15,
+    marginRight: 15
+  },
+  menuHeader: {
+    fontSize: 17,
+    color: colors.gray,
+    textTransform: 'uppercase',
+    marginTop: 10,
+    marginBottom: 10
+  },
+  mySubreddits: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  subredditTitle: {
+    marginTop: 5,
+    marginBottom: 5,
+    fontSize: 16,
+    color: colors.lightestGray
   },
   menuOption: {
     paddingTop: 18,
@@ -43,19 +62,6 @@ const styles = {
   },
   icon: {
     marginRight: 10
-  },
-  mySubreddits: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  mySubredditsTitle: {
-    fontSize: 18,
-    color: 'white'
-  },
-  footer: {
-    display: 'flex',
-    margin: 15,
-    color: 'white'
   }
 }
 
@@ -83,7 +89,10 @@ class Sidebar extends React.Component {
   renderMySubreddits() {
     return (
       <div style={styles.mySubreddits}>
-        <p style={styles.mySubredditsTitle}>My Subreddits</p>
+        <div style={styles.menuHeader}>My Subreddits</div>
+        <div style={styles.subredditTitle}>r/aww</div>
+        <div style={styles.subredditTitle}>r/pics</div>
+        <div style={styles.subredditTitle}>r/nba</div>
       </div>
     )
   }
@@ -101,6 +110,9 @@ class Sidebar extends React.Component {
   renderMenuOptions () {
     return (
       <div style={styles.menuOptions}>
+        <div style={styles.menuHeader}>
+          Menu
+        </div>
         <div style={styles.menuOption} key="home">
           <span style={styles.icon}><i className="fas fa-home"></i></span>
           Home
@@ -123,22 +135,12 @@ class Sidebar extends React.Component {
     )
   }
 
-  renderFooter () {
-    return (
-      <div style={styles.footer}>
-        <div>github</div>
-        <div style={{marginLeft: 5, marginRight: 5}}>|</div>
-        <div>about</div>
-      </div>
-    )
-  }
-
   render () {
     return (
       <div style={styles.leftMenu}>
+        {/* <div>react reddit</div> */}
         {this.renderUser()}
         {this.renderMenuOptions()}
-        {/* {this.renderFooter()} */}
       </div>
     )
   }

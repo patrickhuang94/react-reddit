@@ -4,6 +4,7 @@ import { isEmpty, get } from 'lodash'
 
 import Button from '../elements/button'
 import { openRedditOAuth } from '../utils'
+import colors from '../colors'
 
 const styles = {
   avatarContainer: {
@@ -25,6 +26,9 @@ const styles = {
   },
   karma: {
     color: 'white'
+  },
+  button: {
+    backgroundColor: colors.black
   }
 }
 
@@ -32,6 +36,7 @@ class Avatar extends React.Component {
   renderLoginButton () {
     return (
       <Button
+        style={styles.button}
         uppercase
         title="Login with reddit"
         size="small"

@@ -11,7 +11,6 @@ const styles = {
 }
 
 function textStyles ({color = 'white', uppercase, type, size, bold, disabled}) {
-
   const fontSize = size === 'small' ? 12 : size === 'large' ? 18 : 15
   const fontWeight = bold || type === 'secondary' ? '700' : '400'
   const textTransform = uppercase ? 'uppercase' : 'none'
@@ -25,7 +24,6 @@ function textStyles ({color = 'white', uppercase, type, size, bold, disabled}) {
 }
 
 function containerStyles ({color = colors.darkestGray, disabled, size, type}) {
-
   const backgroundColor = disabled ? colors.gray : type === 'inverted' ? 'white' : color
   const borderColor = disabled ? colors.gray : color
   const padding = size === 'small' ? '10px 15px' : size === 'medium' ? '12px 22px' : '14px 30px'

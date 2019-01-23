@@ -24,7 +24,6 @@ const styles = {
 }
 
 function inputStyles ({bottomBorder}) {
-
   const borderWidth = bottomBorder ? '0 0 1px 0' : '1px'
   const borderRadius = bottomBorder ? 0 : 4
 
@@ -35,9 +34,7 @@ function inputStyles ({bottomBorder}) {
 }
 
 class InputText extends React.Component {
-
   render () {
-
     return (
       <div style={{display: 'flex', position: 'relative'}}>
         <span style={styles.icon}><i className={this.props.iconName}></i></span>
