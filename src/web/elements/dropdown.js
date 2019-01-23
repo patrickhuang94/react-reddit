@@ -1,40 +1,36 @@
 import React from 'react'
 
+import colors from '../colors'
+
 const styles = {
   dropdownContainer: {
-    border: '1px solid #9B9B9B',
-    backgroundColor: 'white',
-    height: '30px',
-    padding: '10px 0px',
-    cursor: 'pointer',
-    zIndex: 99
-  },
-  ul: {
-
+    position: 'absolute',
+    height: 30,
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   li: {
-    padding: '10px',
+    padding: 10,
     backgroundColor: 'white',
-    border: '1px solid #9B9B9B',
-    zIndex: 99
+    borderLeft: `1px solid ${colors.lightGray}`,
+    borderRight: `1px solid ${colors.lightGray}`,
+    borderBottom: `1px solid ${colors.lightGray}`
+  }
+}
+
+const inputStyles = ({ top, right, width }) => {
+  return {
+    top,
+    right,
+    width
   }
 }
 
 class Dropdown extends React.Component {
-  state = {
-    isOpen: false
-  }
-
-  toggleList = () => {
-    this.setState({isOpen: !this.state.isOpen})
-  }
-
   render () {
     return (
-      <div style={styles.dropdownContainer} onClick={this.toggleList}>
-        <div>{this.props.title}</div>
-        { this.state.isOpen &&
-          this.props.list.map(item => {
+      <div style={{...styles.dropdownContainer, ...inputStyles(this.props.styles)}} onClick={this.props.handleClick}>
+        { this.props.list.map(item => {
             return <div style={styles.li}>{item}</div>
           })
         }

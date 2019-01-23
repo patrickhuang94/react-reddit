@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import colors from '../colors'
+import Avatar from '../components/avatar'
 
 const styles = {
 	headerContainer: {
@@ -8,17 +9,17 @@ const styles = {
 		justifyContent: 'flex-end',
 		alignItems: 'center',
 		backgroundColor: colors.lighterGray,
-		marginLeft: 250,
+		marginLeft: 200,
 		paddingLeft: 10,
 		paddingRight: 10,
-		height: 70
+		height: 60
 	},
 	redditHeader: {
     fontSize: 24,
     color: colors.darkestGray,
 		display: 'flex',
     alignItems: 'center'
-  }
+	}
 }
 
 const mapStateToProps = (state) => ({
@@ -33,7 +34,7 @@ class Header extends React.Component {
 	render () {
 		return (
 			<div style={styles.headerContainer}>
-				<div style={styles.redditHeader}>react reddit</div>
+				<Avatar user={this.props.user} />
 			</div>
 		)
 	}

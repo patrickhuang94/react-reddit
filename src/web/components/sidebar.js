@@ -7,14 +7,13 @@ import { isEmpty } from 'lodash'
 
 import colors from '../colors'
 import { updateCurrentSubreddit } from '../actions'
-import Avatar from './avatar'
 
 import { fetchMe, persistToken } from '../actions'
 
 const styles = {
   leftMenu: {
     position: 'fixed',
-    minWidth: 250,
+    minWidth: 200,
     height: '100%',
 		display: 'flex',
     flexDirection: 'column',
@@ -97,16 +96,6 @@ class Sidebar extends React.Component {
     )
   }
 
-  renderUser () {
-    return (
-      <div style={styles.userContainer}>
-        <div style={styles.user}>
-          <Avatar user={this.props.user} />
-        </div>
-      </div>
-    )
-  }
-
   renderMenuOptions () {
     return (
       <div style={styles.menuOptions}>
@@ -138,8 +127,6 @@ class Sidebar extends React.Component {
   render () {
     return (
       <div style={styles.leftMenu}>
-        {/* <div>react reddit</div> */}
-        {this.renderUser()}
         {this.renderMenuOptions()}
       </div>
     )

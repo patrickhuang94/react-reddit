@@ -11,7 +11,7 @@ const styles = {
 	homeContainer: {
 		display: 'flex',
 		flexDirection: 'column',
-		marginLeft: 250,
+		marginLeft: 200,
 		backgroundColor: colors.lightestGray,
 		padding: '0px 15px'
 	},
