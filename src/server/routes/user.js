@@ -18,6 +18,17 @@ router.get('/', async function (req, res) {
   }
 })
 
+router.get('/settings', async function(req, res) {
+  try {
+    const response = await userService.getUserSettings({
+      token: req.query.token
+    })
+    return res.status(200).send(response)
+  } catch (err) {
+
+  }
+})
+
 // DON'T WORK
 router.get('/subreddits', async function (req, res) {
   try {

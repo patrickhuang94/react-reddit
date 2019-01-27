@@ -31,7 +31,7 @@ class Dropdown extends React.Component {
     return (
       <div style={{...styles.dropdownContainer, ...inputStyles(this.props.styles)}} onClick={this.props.handleClick}>
         { this.props.list.map(item => {
-            return <div style={styles.li}>{item}</div>
+            return <div style={styles.li} onClick={this.props.handleOptionClick(item)}>{item}</div>
           })
         }
       </div>

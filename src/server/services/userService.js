@@ -20,6 +20,26 @@ async function getUser ({ token }) {
   }
 }
 
+async function getUserSettings ({ token }) {
+  const url = 'https://oauth.reddit.com/api/v1/me/prefs'
+
+  const request = {
+    method: 'GET',
+    url,
+    headers: { 
+      'User-Agent': 'client',
+      'Authorization': `Bearer ${token}`
+    }
+  }
+
+  try {
+    const response = await axios(request)
+    return response.data
+  } catch (err) {
+    throw new Error(`Could not get user information: ${err.message}`)
+  }
+}
+
 // DON'T WORK
 async function getUserSubreddits ({ token }) {
   const url = 'https://oauth.reddit.com/subreddits/mine/subscriber'
@@ -62,6 +82,7 @@ async function getUpvoted ({ token, username }) {
 
 module.exports = {
   getUser,
+  getUserSettings,
   getUserSubreddits,
   getUpvoted
 }

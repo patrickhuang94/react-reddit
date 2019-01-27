@@ -1,5 +1,6 @@
 import React from 'react'
 import Radium from 'radium'
+import { withRouter } from 'react-router-dom'
 
 import { isEmpty, get } from 'lodash'
 
@@ -15,9 +16,10 @@ const styles = {
     paddingLeft: 10,
     paddingRight: 10,
     height: '75%',
+    border: '1px solid transparent',
     ':hover': {
       cursor: 'pointer',
-      border: `1px solid ${colors.lightGray}`,
+      border: `1px solid ${colors.lightGray}`
     }
   },
   avatar: {
@@ -48,7 +50,7 @@ const styles = {
   },
   dropdownPosition: {
     right: 10,
-    top: 43,
+    top: 44,
     width: 196
   }
 }
@@ -61,6 +63,19 @@ class Avatar extends React.Component {
 
   handleUserDropdownSelect = () => {
     this.setState({ isDropdownOpen: !this.state.isDropdownOpen })    
+  }
+
+  handleUserDropdownBlur = () => {
+    this.setState({ isDropdownOpen: false })
+  }
+
+  handleOptionClick = (option) => () => {
+    switch (option) {
+      case 'Settings':
+        this.props.history.push('/settings')
+    }
+
+    this.setState({ isDropdownOpen: false })
   }
 
   renderLoginButton () {
@@ -80,6 +95,10 @@ class Avatar extends React.Component {
       return this.renderLoginButton()
     }
 
+    const avatarContainerStyle = this.state.isDropdownOpen
+      ? {...styles.avatarContainer, border: `1px solid ${colors.lightGray}`}
+      : {...styles.avatarContainer}
+
     const username = get(this.props.user, 'data.name',)
 		const linkKarma = get(this.props.user, 'data.link_karma')
 		const commentKarma = get(this.props.user, 'data.comment_karma')
@@ -87,7 +106,7 @@ class Avatar extends React.Component {
     const avatar = require('../images/reddit-icon.png')
 
 		return (
-      <div style={styles.avatarContainer} onClick={this.handleUserDropdownSelect}>
+      <div style={avatarContainerStyle} onClick={this.handleUserDropdownSelect} onBlur={this.handleUserDropdownBlur}>
         <img src={avatar} style={styles.avatar} />
         <div style={styles.usernameContainer}>
           <div style={styles.username}>{username}</div>
@@ -101,6 +120,7 @@ class Avatar extends React.Component {
             handleClick={this.handleUserDropdownSelect} 
             list={this.state.dropdownOptions}
             styles={styles.dropdownPosition}
+            handleOptionClick={this.handleOptionClick}
           />
         }
       </div>
@@ -108,4 +128,4 @@ class Avatar extends React.Component {
   }
 }
 
-export default Radium(Avatar)
+export default withRouter(Radium(Avatar))
