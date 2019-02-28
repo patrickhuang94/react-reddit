@@ -9,7 +9,7 @@ export const fetchSettings = () => async (dispatch, getState) => {
       params: { token }
     })
     const settingsData = get(results, 'data')
-    console.log({settingsData})
+    // dispatch
   } catch (err) {
     console.error('error fetching user settings')
   }

@@ -75,12 +75,16 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 class Sidebar extends React.Component {
+  state = {
+    selectedSubreddit: null
+  }
+
   componentDidMount () {
     this.props.persistToken()
     this.props.fetchMe()
   }
 
-  handleMenuSelect = (route) => {
+  handleMenuSelect = () => (route) => {
     this.props.updateCurrentSubreddit({ subreddit: route })
     this.props.history.push(route)
   }
@@ -89,9 +93,9 @@ class Sidebar extends React.Component {
     return (
       <div style={styles.mySubreddits}>
         <div style={styles.menuHeader}>My Subreddits</div>
-        <div style={styles.subredditTitle}>r/aww</div>
-        <div style={styles.subredditTitle}>r/pics</div>
-        <div style={styles.subredditTitle}>r/nba</div>
+        <div style={styles.subredditTitle} onClick={this.handleMenuSelect('aww')}>r/aww</div>
+        <div style={styles.subredditTitle} onClick={this.handleMenuSelect('pics')}>r/pics</div>
+        <div style={styles.subredditTitle} onClick={this.handleMenuSelect('nba')}>r/nba</div>
       </div>
     )
   }
@@ -116,7 +120,7 @@ class Sidebar extends React.Component {
         </div>
         <div style={styles.menuOption} key="random">
           <span style={styles.icon}><i className="fas fa-random"></i></span>
-          Random
+          Rando??m
         </div>
 
         {!isEmpty(this.props.user) && this.renderMySubreddits()}

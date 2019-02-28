@@ -15,7 +15,7 @@ async function vote ({ fullNameId, direction, token }) {
     method: 'POST',
     url,
     headers: { 
-      'User-Agent': USER_AGENT ,
+      'User-Agent': USER_AGENT,
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/x-www-form-urlencoded' 
     },

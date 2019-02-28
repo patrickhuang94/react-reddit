@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { fetchPosts, fetchMe } from '../actions'
+import Categories from './categories'
 import Card from './card'
 import colors from '../colors'
 
@@ -10,28 +11,27 @@ import { isEmpty } from 'lodash'
 const styles = {
 	homeContainer: {
 		display: 'flex',
-		flexDirection: 'column',
-		marginLeft: 200,
+		// flexDirection: 'column',
+		margin: '20px 10vw',
 		backgroundColor: colors.lightestGray,
-		padding: '0px 15px'
 	},
 	postsContainer: {
 		display: 'flex',
 		flexDirection: 'column',
 		height: '100%',
-		overflowY: 'auto'
+		overflowY: 'auto',
 	},
 	homepage: {
 		fontSize: 22,
 		color: colors.darkGray,
 		marginBottom: 20,
-		marginTop: 20
+		marginTop: 20,
 	}
 }
 
 const mapDispatchToProps = (dispatch) => ({
 	fetchPosts: ({ sub, limit }) => dispatch(fetchPosts({ sub, limit })),
-	fetchMe: () => dispatch(fetchMe())
+	fetchMe: () => dispatch(fetchMe()),
 })
 
 const mapStateToProps = (state) => ({
@@ -39,7 +39,7 @@ const mapStateToProps = (state) => ({
 	authentication: state.authentication,
 	user: state.user,
 	loading: state.ui.loading,
-	subreddit: state.ui.currentSubreddit
+	subreddit: state.ui.currentSubreddit,
 })
 
 class Home extends React.Component {
@@ -71,8 +71,13 @@ class Home extends React.Component {
 	render () {
 		return (
 			<div style={styles.homeContainer}>
-				<div style={styles.homepage}>Homepage</div>
-				{!isEmpty(this.props.posts) && this.renderPosts()}
+				<div>
+					{/* <div style={styles.homepage}>Homepage</div> */}
+					{!isEmpty(this.props.posts) && this.renderPosts()}
+				</div>
+				<div>
+					<Categories />
+				</div>
 			</div>
 		)
 	}

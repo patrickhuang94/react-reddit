@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { fetchSettings } from '../actions'
+import { fetchSettings, fetchMessages } from '../actions'
 import colors from '../colors'
 
 const styles = {
@@ -22,7 +22,8 @@ const styles = {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchSettings: () => dispatch(fetchSettings())
+  // fetchSettings: () => dispatch(fetchSettings())
+  fetchMessages: () => dispatch(fetchMessages())
 })
 
 const mapStateToProps = (state) => ({
@@ -31,7 +32,8 @@ const mapStateToProps = (state) => ({
 
 class Settings extends React.Component {
   componentDidMount () {
-    this.props.fetchSettings()
+    // this.props.fetchSettings()
+    this.props.fetchMessages()
   }
 
   render () {

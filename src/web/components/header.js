@@ -8,8 +8,9 @@ const styles = {
 		display: 'flex',
 		justifyContent: 'flex-end',
 		alignItems: 'center',
-		backgroundColor: colors.lighterGray,
-		marginLeft: 200,
+		// backgroundColor: colors.lighterGray,
+		backgroundColor: 'white',
+		// marginLeft: 200,
 		paddingLeft: 10,
 		paddingRight: 10,
 		height: 60

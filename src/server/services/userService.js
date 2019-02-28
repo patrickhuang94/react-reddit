@@ -27,7 +27,6 @@ async function getUserSettings ({ token }) {
     method: 'GET',
     url,
     headers: { 
-      'User-Agent': 'client',
       'Authorization': `Bearer ${token}`
     }
   }
@@ -37,6 +36,30 @@ async function getUserSettings ({ token }) {
     return response.data
   } catch (err) {
     throw new Error(`Could not get user information: ${err.message}`)
+  }
+}
+
+async function getMessages ({ token }) {
+  console.log('token', token)
+  // const url = 'https://oauth.reddit.com/message/inbox'
+  const url = 'https://oauth.reddit.com/api/v1/me/prefs'
+  const USER_AGENT = 'web:LeltpchMUToy9w:v0.0.1 (by /u/pahtreeeck)' 
+
+  const request = {
+    method: 'GET',
+    url,
+    headers: { 
+      'User-Agent': USER_AGENT,
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/x-www-form-urlencoded' 
+    }
+  }
+
+  try {
+    const response = await axios(request)
+    return response.data
+  } catch (err) {
+    throw new Error(`Could not get messages inbox: ${err.message}`)
   }
 }
 
@@ -83,6 +106,7 @@ async function getUpvoted ({ token, username }) {
 module.exports = {
   getUser,
   getUserSettings,
+  getMessages,
   getUserSubreddits,
   getUpvoted
 }

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
+import colors from './web/colors'
 // import App from './web/components/App'
 import Header from './web/components/header'
 import Sidebar from './web/components/sidebar'
@@ -17,29 +18,23 @@ import './index.css'
 require('dotenv').config()
 
 const styles = {
-	mainContainer: {
-		display: 'flex',
-		height: '100%',
-		overflow: 'hidden'
-	},
-	content: {
+	container: {
 		display: 'flex',
 		flexDirection: 'column',
-		width: '100%'
-	}
+		height: '100%',
+		overflow: 'hidden',
+		backgroundColor: colors.lightestGray,
+	},
 }
 
 const app = (
 	<Provider store={store}>
 		<Router history={history} onUpdate={() => window.scrollTo(0, 0)}>
-			<div style={styles.mainContainer}>
-				<Sidebar />
-				<div style={styles.content}>
-					<Header />
-					<Route exact path="/" component={Home} />
-					<Route exact path="/oauth" component={OAuthRedirect} />
-					<Route exact path="/settings" component={Settings} />
-				</div>
+			<div style={styles.container}>
+				<Header />
+				<Route exact path="/" component={Home} />
+				<Route exact path="/oauth" component={OAuthRedirect} />
+				<Route exact path="/settings" component={Settings} />
 			</div>
 		</Router>
 	</Provider>

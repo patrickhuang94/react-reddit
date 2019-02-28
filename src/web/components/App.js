@@ -19,15 +19,16 @@ const styles = {
 }
 
 const App = () => {
-	return (
-		<div style={styles.mainContainer}>
-			<Sidebar />
-			<div style={styles.content}>
-				<Header />
-				<Home />
-			</div>
-		</div>
-	)
+	// return (
+	// 	<div style={styles.mainContainer}>
+	// 		{/* <Sidebar /> */}
+	// 		<div style={styles.content}>
+	// 			{/* <Header /> */}
+	// 			<Home />
+	// 		</div>
+	// 	</div>
+	// )
+	return <div></div>
 }
 
 export default App
