@@ -1,37 +1,26 @@
 import {
-  SHOW_MODAL,
-  HIDE_MODAL,
-  START_LOADING,
-  STOP_LOADING,
+  LOADING_START,
+  LOADING_DONE,
   CURRENT_SUBREDDIT
 } from '../actions/actionTypes'
 
 const initialState = {
-  loading: null,
-  modalType: null,
-  currentSubreddit: 'popular'
+  isLoading: true,
+  currentSubreddit: 'all',
 }
 
 function ui (state = initialState, action) {
   switch (action.type) {
-    case SHOW_MODAL:
-      return {
-        modalType: action.payload
-      }
-
-    case HIDE_MODAL:
-      return initialState
-
-    case START_LOADING: 
+    case LOADING_START: 
       return {
         ...state,
-        loading: true
+        isLoading: true,
       }
 
-    case STOP_LOADING:
+    case LOADING_DONE:
       return {
         ...state,
-        loading: false
+        isLoading: false,
       }
 
     case CURRENT_SUBREDDIT:
