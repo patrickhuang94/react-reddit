@@ -1,26 +1,15 @@
 import { 
-  SHOW_MODAL, 
-  HIDE_MODAL, 
-  START_LOADING, 
-  STOP_LOADING, 
+  LOADING_START, 
+  LOADING_DONE, 
   CURRENT_SUBREDDIT
 } from './actionTypes'
 
-export const showModal = (type) => ({
-  type: SHOW_MODAL,
-  payload: type
+export const loadingStart = () => ({
+  type: LOADING_START
 })
 
-export const hideModal = () => ({
-  type: HIDE_MODAL
-})
-
-export const startLoading = () => ({
-  type: START_LOADING
-})
-
-export const stopLoading = () => ({
-  type: STOP_LOADING
+export const loadingDone = () => ({
+  type: LOADING_DONE
 })
 
 export const updateCurrentSubreddit = ({ subreddit }) => ({

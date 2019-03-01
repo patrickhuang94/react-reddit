@@ -1,18 +1,18 @@
 import axios from 'axios'
-import { startLoading, stopLoading } from './ui'
+import { loadingStart, loadingDone } from './ui'
 import { ADD_POSTS } from './actionTypes'
 import { formatPosts } from '../utils'
 
 export const fetchPosts = ({ sub, limit }) => async (dispatch) => {
-  dispatch(startLoading())
+  dispatch(loadingStart())
   const fetchUrl = `https://www.reddit.com/r/${sub}.json`
   try {
     const fetchedPosts = await axios.get(fetchUrl)
     const formattedPosts = formatPosts(fetchedPosts)
     dispatch(addPosts(formattedPosts))
-    dispatch(stopLoading())
+    dispatch(loadingDone())
   } catch (err) {
-    dispatch(stopLoading())
+    dispatch(loadingDone())
   }
 }
 
