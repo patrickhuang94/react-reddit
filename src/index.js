@@ -19,7 +19,6 @@ const styles = {
 	container: {
 		display: 'flex',
 		flexDirection: 'column',
-		height: '100vh',
 		overflow: 'hidden',
 		backgroundColor: colors.lightestGray,
 	},
