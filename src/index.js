@@ -1,12 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
 import colors from './web/colors'
-// import App from './web/components/App'
 import Header from './web/components/header'
-import Sidebar from './web/components/sidebar'
 import Home from './web/components/home'
 import OAuthRedirect from './web/components/oauthRedirect'
 import Settings from './web/components/settings'
@@ -21,7 +19,7 @@ const styles = {
 	container: {
 		display: 'flex',
 		flexDirection: 'column',
-		height: '100%',
+		height: '100vh',
 		overflow: 'hidden',
 		backgroundColor: colors.lightestGray,
 	},

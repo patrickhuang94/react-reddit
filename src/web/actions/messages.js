@@ -8,7 +8,7 @@ export const fetchMessages = () => async (dispatch, getState) => {
     const results = await axios.get('/api/user/messages', {
       params: { token }
     })
-    const messages = get(results, 'data')
+    // const messages = get(results, 'data')
     // dispatch
   } catch (err) {
     console.error('error fetching user messages: ', err)

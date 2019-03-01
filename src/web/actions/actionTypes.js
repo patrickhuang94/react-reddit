@@ -2,10 +2,8 @@
 export const ADD_POSTS = 'ADD_POSTS'
 
 // ui
-export const SHOW_MODAL = 'SHOW_MODAL'
-export const HIDE_MODAL = 'HIDE_MODAL'
-export const START_LOADING = 'START_LOADING'
-export const STOP_LOADING = 'STOP_LOADING'
+export const LOADING_START = 'LOADING_START'
+export const LOADING_DONE = 'LOADING_DONE'
 export const CURRENT_SUBREDDIT = 'CURRENT_SUBREDDIT'
 
 // authentication
