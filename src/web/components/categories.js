@@ -65,6 +65,11 @@ class Categories extends React.Component {
           <i className="fas fa-random"></i>
           <div className={classes.listItemText}>Random</div>
         </ListItem>
+        <Divider />
+        <ListItem button selected={this.props.selectedCategory === 'nba'} onClick={() => this.handleCategorySelect('nba')}>
+          <i className="fas fa-basketball-ball"></i>
+          <div className={classes.listItemText}>NBA</div>
+        </ListItem>
       </List>
     )
   }
