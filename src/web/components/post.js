@@ -19,7 +19,7 @@ const styles = {
     justifyContent: 'center',
     paddingLeft: 7,
     paddingRight: 7,
-    minWidth: 30,
+    minWidth: 38,
     color: colors.darkGray,
     borderRight: `1px solid ${colors.lightGray}`,
   },
