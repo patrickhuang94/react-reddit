@@ -27,7 +27,7 @@ class Posts extends React.Component {
     return (
       <div style={styles.postsContainer}>
         {this.props.posts.map((post, index) => (
-          <Post post={post} index={index} />
+          <Post post={post} key={index} index={index} />
         ))}
       </div>
     )

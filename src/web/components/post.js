@@ -1,17 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { get, isEmpty } from 'lodash'
-
+import Notification from './notification'
 import { votePost } from '../actions/vote'
 import colors from '../colors'
 import { digitsRounder } from '../utils'
+import { isEmpty } from 'lodash'
 
 const styles = {
-  cardContainer: {
+  postContainer: {
     display: 'flex',
     backgroundColor: 'white',
-    paddingTop: 20,
-    paddingBottom: 20,
     borderBottom: `1px solid ${colors.lightGray}`,
   },
   scoreContainer: {
@@ -19,22 +17,28 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10,
-    minWidth: 50,
-    fontSize: 16,
-    color: colors.darkGray
+    paddingLeft: 7,
+    paddingRight: 7,
+    minWidth: 30,
+    color: colors.darkGray,
+    borderRight: `1px solid ${colors.lightGray}`,
+  },
+  thumbnailAndInfoContainer: {
+    display: 'flex',
+    margin: 15,
+  },
+  score: {
+    fontSize: 12,
   },
   thumbnailContainer: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    position: 'relative',
   },
   contentContainer: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginLeft: 15,
-    marginRight: 10
   },
   titleAuthorContainer: {
     display: 'flex',
@@ -42,33 +46,28 @@ const styles = {
   },
   titleText: {
     color: colors.darkBlue,
-    fontWeight: 600,
-    fontSize: 18,
+    fontWeight: 500,
+    fontSize: 17,
     marginBottom: 8
   },
   thumbnail: {
-    width: 100,
-    height: 100
+    maxWidth: 80,
+    maxHeight: 80,
+    width: 'auto',
+    height: 'auto',
   },
-  postedBy: {
+  secondaryTextContainer: {
+    display: 'flex',
     fontSize: 13,
     color: colors.darkGray,
     marginBottom: 5
   },
-  username: {
+  secondaryText: {
     fontSize: 13,
     marginLeft: 4,
-    color: colors.redditOrange
-  },
-  subreddit: {
-    fontSize: 13,
-    marginLeft: 4,
-    color: colors.redditOrange
   },
   arrow: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    fontSize: 14,
+    fontSize: 20,
     color: colors.darkestGray,
     cursor: 'pointer',
     ':hover': {
@@ -77,9 +76,14 @@ const styles = {
     }
   },
   nsfw: {
+    fontSize: 12,
     color: colors.red,
     border: `1px solid ${colors.red}`,
-    textAlign: 'center'
+    textAlign: 'center',
+    position: 'absolute',
+    top: 67,
+    width: '98%',
+    marginBottom: 6,
   },
   commentsContainer: {
     display: 'flex',
@@ -87,11 +91,7 @@ const styles = {
   },
   commentsCount: {
     color: colors.redditOrange,
-    border: `1px solid ${colors.redditOrange}`,
-    borderRadius: 5,
-    marginRight: 10,
-    padding: 5,
-    fontSize: 13
+    fontSize: 13,
   }
 }
 
@@ -104,103 +104,95 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 class Post extends React.Component {
-  handleDownvote = () => {
+  state = {
+    isSnackbarOpen: false,
+  }
+
+  handleVote = () => (direction) => {
+    if (isEmpty(this.props.user)) {
+      return this.setState({ isSnackbarOpen: true })
+    }
+
     this.props.votePost({
       fullNameId: this.props.post.name,
-      direction: '-1'
+      direction,
     })
   }
 
-  handleUpvote = () => {
-    this.props.votePost({
-      fullNameId: this.props.post.name,
-      direction: '1'
-    })
+  handleCloseSnackbar = () => {
+    this.setState({ isSnackbarOpen: false })
   }
 
   renderScore (score) {
-    if (isEmpty(this.props.user)) {
-      return (
-        <div style={styles.scoreContainer}>
-          {score}
-        </div>
-      )
-    }
-
     return (
       <div style={styles.scoreContainer}>
-        <div style={styles.arrow} onClick={this.handleUpvote}>
-          <i className="fas fa-arrow-up" />
+        <div style={styles.arrow} onClick={this.handleVote('1')}>
+          <i className="fas fa-angle-up" />
         </div>
-        {score}
-        <div style={styles.arrow} onClick={this.handleDownvote}>
-          <i className="fas fa-arrow-down" />
+        <div style={styles.score}>{score}</div>
+        <div style={styles.arrow} onClick={this.handleVote('-1')}>
+          <i className="fas fa-angle-down" />
         </div>
       </div>
     )
   }
 
-  renderThumbnail () {
-    const { post } = this.props
-    let thumbnail = post.thumbnail
-    if (post.thumbnail === 'self' || post.thumbnail === 'default') {
+  renderThumbnail (postType) {
+    let thumbnail = postType
+    const thumbnailContainerStyle = !thumbnail 
+      ? styles.thumbnailContainer 
+      : {...styles.thumbnailContainer, marginRight: 15 }
+
+    if (postType === 'self' || postType === 'default') {
       thumbnail = require('../images/text-icon.png')
-    }
-    if (post.thumbnail === 'nsfw' || post.thumbnail === 'image') {
+    } else if (postType === 'nsfw' || postType === 'image') {
       thumbnail = require('../images/reddit-icon.png')
     }
 
     return (
-      <div style={styles.thumbnailContainer}>
+      <div style={thumbnailContainerStyle}>
         <img src={thumbnail} style={styles.thumbnail} />
-        {post.thumbnail === 'nsfw' && <div style={styles.nsfw}>nsfw</div>}
+        {postType === 'nsfw' && <div style={styles.nsfw}>nsfw</div>}
       </div>
     )
   }
 
-  renderPostedBy () {
-    const { post } = this.props
+  renderPostContent (post) {
+    const commentsCount = digitsRounder(post.num_comments)
     const timeNowInMs = Math.floor(Date.now() / 1000)
     const postedTime = post.created_utc
     const displayTimeInHours = Math.floor((timeNowInMs - postedTime) / 60 / 60)
-    const subreddit = get(post, 'subreddit')
 
     return (
-      <div style={styles.postedBy}>
-        posted {displayTimeInHours} hours ago by
-        <span style={styles.username}>{post.author}</span> to
-        <span style={styles.subreddit}>{`r/${subreddit}`}</span>
-      </div>
-    )
-  }
-
-  renderCommentsCount () {
-    const { post } = this.props
-    const count = digitsRounder(get(post, 'num_comments'))
-
-    return (
-      <div style={styles.commentsCount}>
-        {count} comments
+      <div style={styles.contentContainer}>
+        <div style={styles.titleAuthorContainer}>
+          <div style={styles.titleText}>{post.title}</div>
+          <div style={styles.secondaryTextContainer}>
+            <div style={styles.commentsCount}>{commentsCount} comments</div>
+            <div style={styles.secondaryText}>
+              u/{post.author} to {`r/${post.subreddit}`} {displayTimeInHours} hours ago
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
 
   render () {
     const { post, index } = this.props
-    const title = get(post, 'title')
-    const score = digitsRounder(get(post, 'score'))
-
+    const score = digitsRounder(post.score)
     return (
-      <div style={styles.cardContainer} key={index}>
+      <div style={styles.postContainer} key={index}>
         {this.renderScore(score)}
-        {this.renderThumbnail()}
-        <div style={styles.contentContainer}>
-          <div style={styles.titleAuthorContainer}>
-            <div style={styles.titleText}>{title}</div>
-            {this.renderPostedBy()}
-          </div>
-          {this.renderCommentsCount()}
+        <div style={styles.thumbnailAndInfoContainer}>
+          {this.renderThumbnail(post.thumbnail)}
+          {this.renderPostContent(post)}
         </div>
+        <Notification 
+          isOpen={this.state.isSnackbarOpen}
+          onClose={this.handleCloseSnackbar}
+          message="Please log in to vote on posts!"
+        />
       </div>
     )
   }
