@@ -1,10 +1,14 @@
 import axios from 'axios'
-import { get } from 'lodash'
+import { get, isEmpty } from 'lodash'
 import { ADD_USER } from './actionTypes'
+import { getTokenFromCookies } from './auth'
 
 export const fetchMe = () => async (dispatch, getState) => {
   const state = getState()
-  const token = state.authentication.access_token
+  let token = get(state, 'authentication.access_token')
+  if (isEmpty(state.authentication)) {
+    token = await dispatch(getTokenFromCookies())
+  }
 
   try {
     const results = await axios.get('/api/user', {

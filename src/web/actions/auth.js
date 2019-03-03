@@ -8,7 +8,7 @@ export const addBearerToken = ({ bearerToken }) => ({
   payload: bearerToken
 })
 
-export const persistToken = () => async (dispatch) => {
+export const getTokenFromCookies = () => async (dispatch) => {
   if (Date.now() > Cookies.get('expires_at')) {
     await dispatch(refreshBearerToken())
   } else {
@@ -16,6 +16,8 @@ export const persistToken = () => async (dispatch) => {
       bearerToken: { access_token: Cookies.get('bearer_token')}
     }))
   }
+
+  return Cookies.get('bearer_token')
 }
 
 export const refreshBearerToken = () => async (dispatch) => {
@@ -50,7 +52,7 @@ export const getBearerToken = ({ code }) => async (dispatch) => {
 
     const bearerToken = get(result, 'data')
     const expiresInMs = bearerToken.expires_in * 1000
-
+    
     Cookies.set('expires_at', Date.now() + expiresInMs)    
     Cookies.set('bearer_token', bearerToken.access_token)
     Cookies.set('refresh_token', bearerToken.refresh_token)
