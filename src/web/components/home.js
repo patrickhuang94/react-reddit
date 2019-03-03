@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { isEmpty } from 'lodash'
 
-import { fetchPosts, fetchMe } from '../actions'
+import { fetchPosts, fetchMe, getTokenFromCookies} from '../actions'
 import Categories from './categories'
 import Posts from './posts'
 import Loading from './loading'
@@ -23,6 +23,7 @@ const styles = {
 const mapDispatchToProps = (dispatch) => ({
 	fetchPosts: ({ sub, limit }) => dispatch(fetchPosts({ sub, limit })),
 	fetchMe: () => dispatch(fetchMe()),
+	getTokenFromCookies: () => dispatch(getTokenFromCookies()),
 })
 
 const mapStateToProps = (state) => ({
@@ -35,12 +36,9 @@ const mapStateToProps = (state) => ({
 })
 
 class Home extends React.Component {
-	componentDidMount () {
+	async componentDidMount () {
 		this.props.fetchPosts({ sub: this.props.subreddit })
-		if (!isEmpty(this.props.authentication)) {
-			// TODO: This if statement never gets executed
-			this.props.fetchMe()
-		}
+		this.props.fetchMe()
 	}
 
 	componentDidUpdate (prevProps) {

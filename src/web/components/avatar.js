@@ -1,7 +1,6 @@
 import React from 'react'
 import Radium from 'radium'
 import { withRouter } from 'react-router-dom'
-
 import { isEmpty, get } from 'lodash'
 
 import Button from '../elements/button'
