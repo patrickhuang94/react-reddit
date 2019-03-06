@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { isEmpty } from 'lodash'
 
 import { fetchPosts, fetchMe, getTokenFromCookies} from '../actions'
 import Categories from './categories'

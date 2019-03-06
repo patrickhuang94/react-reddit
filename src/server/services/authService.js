@@ -1,6 +1,8 @@
 const axios = require('axios')
 const querystring = require('querystring')
 
+require('dotenv').config()
+
 async function getAuthToken ({ refreshToken, code }) {
   let data
   if (refreshToken) {
