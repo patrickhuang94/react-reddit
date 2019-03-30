@@ -40,7 +40,6 @@ async function getUserSettings ({ token }) {
 }
 
 async function getMessages ({ token }) {
-  console.log('token', token)
   // const url = 'https://oauth.reddit.com/message/inbox'
   const url = 'https://oauth.reddit.com/api/v1/me/prefs'
   const USER_AGENT = 'web:LeltpchMUToy9w:v0.0.1 (by /u/pahtreeeck)' 
@@ -108,5 +107,5 @@ module.exports = {
   getUserSettings,
   getMessages,
   getUserSubreddits,
-  getUpvoted
+  getUpvoted,
 }

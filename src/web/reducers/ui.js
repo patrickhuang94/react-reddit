@@ -1,8 +1,9 @@
-import { LOADING_START, LOADING_DONE, CURRENT_SUBREDDIT } from '../actions/actionTypes'
+import { LOADING_START, LOADING_DONE, CURRENT_SUBREDDIT, CURRENT_SETTINGS_OPTION } from '../actions/actionTypes'
 
 const initialState = {
 	isLoading: true,
 	currentSubreddit: 'all',
+	currentSettingsOption: 'login',
 }
 
 function ui(state = initialState, action) {
@@ -23,6 +24,12 @@ function ui(state = initialState, action) {
 			return {
 				...state,
 				currentSubreddit: action.payload,
+			}
+
+		case CURRENT_SETTINGS_OPTION:
+			return {
+				...state,
+				currentSettingsOption: action.payload,
 			}
 
 		default:

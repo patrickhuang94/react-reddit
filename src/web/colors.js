@@ -11,7 +11,7 @@ const colors = {
   red: '#FF0000',
   purple: '#8F75E3',
   black: '#000000',
-  redditOrange: '#FF5700'
+  redditOrange: '#FF5700',
 }
 
 export default colors
