@@ -1,43 +1,43 @@
 {
-	"name": "react-reddit",
-	"version": "0.1.0",
-	"private": true,
-	"dependencies": {
-		"@material-ui/core": "^3.9.2",
-		"@material-ui/icons": "^3.0.2",
-		"axios": "^0.18.0",
-		"body-parser": "^1.18.3",
-		"dotenv": "^6.0.0",
-		"js-cookie": "^2.2.0",
-		"lodash": "^4.17.11",
-		"moment": "^2.22.1",
-		"query-string": "^6.1.0",
-		"radium": "^0.24.0",
-		"react": "^16.7.0-alpha.2",
-		"react-dom": "^16.7.0-alpha.2",
-		"react-redux": "^5.0.6",
-		"react-router-dom": "^4.3.1",
-		"react-router-redux": "^4.0.8",
-		"react-scripts": "1.0.17",
-		"react-timeago": "^4.1.9",
-		"redux": "^3.1.0",
-		"redux-devtools-extension": "^2.13.2",
-		"redux-persist": "^5.10.0",
-		"redux-thunk": "^2.2.0",
-		"request": "^2.87.0"
-	},
-	"scripts": {
-		"start": "react-scripts start",
-		"server": "nodemon src/server/index.js",
-		"build": "react-scripts build",
-		"test": "react-scripts test --env=jsdom",
-		"eject": "react-scripts eject",
-		"deploy": "npm run build&&gh-pages -d build"
-	},
-	"devDependencies": {
-		"gh-pages": "^1.2.0",
-		"nodemon": "^1.18.9"
-	},
-	"homepage": "https://patrickhuang94.github.io/react-reddit",
-	"proxy": "http://localhost:3001/"
+  "name": "react-reddit",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "js-cookie": "^2.2.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.1",
+    "query-string": "^6.1.0",
+    "radium": "^0.24.0",
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.7.0-alpha.2",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.3.1",
+    "react-router-redux": "^4.0.8",
+    "react-scripts": "1.0.17",
+    "react-timeago": "^4.1.9",
+    "redux": "^3.1.0",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-persist": "^5.10.0",
+    "redux-thunk": "^2.2.0",
+    "request": "^2.87.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "server": "nodemon src/server/index.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "deploy": "npm run build&&gh-pages -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.2.0",
+    "nodemon": "^1.18.9"
+  },
+  "homepage": "https://patrickhuang94.github.io/react-reddit",
+  "proxy": "http://localhost:3001/"
 }
