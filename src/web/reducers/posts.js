@@ -1,24 +1,20 @@
-import {
-  ADD_POSTS
-} from '../actions/actionTypes'
+import { ADD_POSTS } from '../actions/actionTypes'
 
 const initialState = {
-  data: {}
+	data: {},
 }
 
-function posts (state = initialState, action) {
+function posts(state = initialState, action) {
+	switch (action.type) {
+		case ADD_POSTS:
+			return {
+				...state,
+				data: action.payload,
+			}
 
-  switch (action.type) {
-
-    case ADD_POSTS:
-      return {
-        ...state,
-        data: action.payload
-      }
-
-    default:
-      return state
-  }
+		default:
+			return state
+	}
 }
 
 export default posts
