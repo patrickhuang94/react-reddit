@@ -1,7 +1,7 @@
-import { ADD_POSTS } from '../actions/actionTypes'
+import { ADD_POSTS, UPDATE_POST } from '../actions/actionTypes'
 
 const initialState = {
-	data: {},
+	data: [],
 }
 
 function posts(state = initialState, action) {
@@ -10,6 +10,19 @@ function posts(state = initialState, action) {
 			return {
 				...state,
 				data: action.payload,
+			}
+
+		case UPDATE_POST:
+			const posts = state.data.map((post) => {
+				if (post.name === action.payload.name) {
+					return action.payload
+				}
+				return post
+			})
+
+			return {
+				...state,
+				data: posts,
 			}
 
 		default:

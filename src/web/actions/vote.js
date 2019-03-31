@@ -1,25 +1,32 @@
-import axios from 'axios'
+import { vote } from '../services/voteService'
+import { fetchUpvoted } from '../actions/user' // TODO: use service file instead!
+import { updatePost } from '../actions/posts'
 
 export const votePost = ({ fullNameId, direction }) => async (dispatch, getState) => {
-  try {
-    const state = getState()
-    const token = state.authentication.access_token
-    // TODO: should probably in a web/service file
-    // same for other action files
-    const request = {
-      method: 'POST',
-      url: '/api/vote',
-      data: {
-        fullNameId,
-        direction
-      },
-      params: {
-        token
-      }
-    }
+	const state = getState()
+	const token = state.authentication.access_token
+	const username = state.user.name
 
-    return await axios(request)
-  } catch (err) {
-    throw err
-  }
+	await vote({
+		fullNameId,
+		direction,
+		token,
+	})
+
+	const post = state.posts.data.find((post) => post.name === fullNameId)
+	const updatedPost = {
+		...post,
+		likes: true,
+	}
+
+	dispatch(updatePost(updatedPost))
+
+	// const posts = await fetchUpvoted({
+	// 	username,
+	// 	token,
+	// })
+
+	// const upvotedPost = posts.find((post) => post.data.name === fullNameId)
+	// const upvotedPostData = upvotedPost.data
+	// dispatch(updatePost(upvotedPostData))
 }

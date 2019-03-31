@@ -1,5 +1,7 @@
 // posts
 export const ADD_POSTS = 'ADD_POSTS'
+export const UPDATE_POST = 'UPDATE_POST'
+export const STORE_SUBREDDITS = 'STORE_SUBREDDITS'
 
 // ui
 export const LOADING_START = 'LOADING_START'
